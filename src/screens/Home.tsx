@@ -4,8 +4,12 @@ import { MapPin, ShoppingCart } from "phosphor-react-native";
 import Coffee from "@assets/image.png";
 import { CoffeeItem } from "@components/CoffeeItem";
 import CoffeeImage1 from "@assets/Coffee1.png";
+import { ButtonComponent } from "@components/Button";
 
 export function Home() {
+  function handleClick(text: string) {
+    console.log(`oie, ${text}`);
+  }
   return (
     <View flex="1" px={8} bgColor="gray.50">
       <VStack>
@@ -63,6 +67,11 @@ export function Home() {
             />
           </CoffeeItem>
         </View>
+        <ButtonComponent
+          handleOnClick={handleClick}
+          color="purple"
+          text="SOU LINDO DEMAIS"
+        />
       </VStack>
     </View>
   );

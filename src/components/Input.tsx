@@ -6,8 +6,6 @@ export function InputComponent() {
   const [text, setText] = useState("");
   const [focus, setFocus] = useState(false);
 
-  console.log(focus);
-
   function handleFocus() {
     setFocus(true);
   }
