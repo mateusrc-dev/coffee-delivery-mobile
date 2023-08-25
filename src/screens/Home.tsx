@@ -7,6 +7,7 @@ import CoffeeImage1 from "@assets/Coffee1.png";
 import { ButtonComponent } from "@components/Button";
 import { ButtonIcon } from "@components/ButtonIcon";
 import { Select } from "@components/Select";
+import { Tag } from "@components/Tag";
 
 export function Home() {
   function handleClick(text: string) {
@@ -81,6 +82,7 @@ export function Home() {
         />
         <ButtonIcon handleOnClick={handleClick} svg="trash" />
         <Select handleOnClick={handleSelect} text="sou gostoso" />
+        <Tag handleOnClick={handleSelect} text="oiiieeee!" />
       </VStack>
     </View>
   );

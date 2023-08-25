@@ -8,7 +8,6 @@ type Props = {
 
 export function Tag({ handleOnClick, text }: Props) {
   const [isSelected, setIsSelected] = useState<boolean>(false);
-  console.log(isSelected);
 
   useEffect(() => {
     handleOnClick(isSelected);
@@ -17,14 +16,15 @@ export function Tag({ handleOnClick, text }: Props) {
   if (isSelected) {
     return (
       <Button
-        h={40}
-        backgroundColor="rgba(1,  1,  1,  0)"
+        p="0"
+        py={"1.5"}
+        px={3}
+        backgroundColor="purple.50"
         borderWidth={1}
-        borderColor="purple.50"
-        rounded={6}
+        rounded={"full"}
         onPress={() => setIsSelected((prevState) => !prevState)}
       >
-        <Text fontSize="text_sm" color="purple.50" fontFamily={"heading"}>
+        <Text fontSize="10" color="gray.900" fontFamily={"heading"}>
           {text}
         </Text>
       </Button>
@@ -32,12 +32,16 @@ export function Tag({ handleOnClick, text }: Props) {
   } else {
     return (
       <Button
-        h={10}
-        backgroundColor="gray.600"
-        rounded={6}
+        p="0"
+        py={1.5}
+        px={3}
+        backgroundColor="rgba(1, 1, 1, 0)"
+        borderWidth={1}
+        borderColor="purple.50"
+        rounded={"full"}
         onPress={() => setIsSelected((prevState) => !prevState)}
       >
-        <Text fontSize="text_sm" color="gray.200" fontFamily={"body"}>
+        <Text fontSize="10" color="purple.100" fontFamily={"heading"}>
           {text}
         </Text>
       </Button>

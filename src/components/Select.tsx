@@ -8,7 +8,6 @@ type Props = {
 
 export function Select({ handleOnClick, text }: Props) {
   const [isSelected, setIsSelected] = useState<boolean>(false);
-  console.log(isSelected);
 
   useEffect(() => {
     handleOnClick(isSelected);
@@ -17,7 +16,7 @@ export function Select({ handleOnClick, text }: Props) {
   if (isSelected) {
     return (
       <Button
-        h={40}
+        h={10}
         backgroundColor="rgba(1,  1,  1,  0)"
         borderWidth={1}
         borderColor="purple.50"
