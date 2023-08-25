@@ -19,7 +19,11 @@ export function InputNumber({ returnsCountNumber, withBorder }: Props) {
   }
 
   function handleClickSubtract() {
-    setNumber((prevState) => prevState - 1);
+    if (number <= 0) {
+      return;
+    } else {
+      setNumber((prevState) => prevState - 1);
+    }
   }
 
   return (
@@ -32,15 +36,15 @@ export function InputNumber({ returnsCountNumber, withBorder }: Props) {
       borderColor="gray.500"
       space={1.5}
     >
-      <View position={"absolute"} left="0">
+      <View>
         <ButtonIcon handleOnClick={handleClickSubtract} svg="minus" />
       </View>
-      <View position={"absolute"} left="42.5">
+      <View>
         <Text fontFamily="body" fontSize="text_md" color="gray.50">
           {number}
         </Text>
       </View>
-      <View position={"absolute"} right="0">
+      <View>
         <ButtonIcon handleOnClick={handleClickSum} svg="plus" />
       </View>
     </HStack>

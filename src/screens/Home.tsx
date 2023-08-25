@@ -1,5 +1,13 @@
 import { InputComponent } from "@components/Input";
-import { Box, Container, HStack, Image, Text, VStack, View } from "native-base";
+import {
+  Box,
+  HStack,
+  Image,
+  ScrollView,
+  Text,
+  VStack,
+  View,
+} from "native-base";
 import { MapPin, ShoppingCart } from "phosphor-react-native";
 import Coffee from "@assets/image.png";
 import { CoffeeItem } from "@components/CoffeeItem";
@@ -9,6 +17,7 @@ import { ButtonIcon } from "@components/ButtonIcon";
 import { Select } from "@components/Select";
 import { Tag } from "@components/Tag";
 import { InputNumber } from "@components/InputNumber";
+import { CardCar } from "@components/CardCar";
 
 export function Home() {
   function handleClick(text: string) {
@@ -23,9 +32,13 @@ export function Home() {
     console.log(num);
   }
 
+  function handleClickCard() {
+    console.log("cliquei");
+  }
+
   return (
     <View flex="1" px={8} bgColor="gray.50">
-      <VStack>
+      <ScrollView>
         <HStack mt="10" justifyContent="space-between" alignItems="center">
           <HStack space={2} alignItems="center">
             <MapPin weight="fill" color="#8047F8" size={20} />
@@ -96,7 +109,21 @@ export function Home() {
             withBorder={true}
           />
         </Box>
-      </VStack>
+        <CardCar
+          coffeeAmount="200 ml"
+          coffeeName="Café lindo"
+          handleOnClick={handleClickCard}
+          price={50}
+        >
+          <Image
+            mt="-8"
+            w="120"
+            h="120"
+            source={CoffeeImage1}
+            alt="imagem do cafe"
+          />
+        </CardCar>
+      </ScrollView>
     </View>
   );
 }
