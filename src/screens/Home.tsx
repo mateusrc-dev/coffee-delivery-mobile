@@ -6,11 +6,17 @@ import { CoffeeItem } from "@components/CoffeeItem";
 import CoffeeImage1 from "@assets/Coffee1.png";
 import { ButtonComponent } from "@components/Button";
 import { ButtonIcon } from "@components/ButtonIcon";
+import { Select } from "@components/Select";
 
 export function Home() {
   function handleClick(text: string) {
     console.log(`oie, ${text}`);
   }
+
+  function handleSelect(state: boolean) {
+    console.log(state);
+  }
+
   return (
     <View flex="1" px={8} bgColor="gray.50">
       <VStack>
@@ -73,12 +79,8 @@ export function Home() {
           color="purple"
           text="SOU LINDO DEMAIS"
         />
-        <ButtonIcon
-          backgroundColor="transparent"
-          handleOnClick={handleClick}
-          svg="trash"
-          svgColor="purple_dark"
-        />
+        <ButtonIcon handleOnClick={handleClick} svg="trash" />
+        <Select handleOnClick={handleSelect} text="sou gostoso" />
       </VStack>
     </View>
   );

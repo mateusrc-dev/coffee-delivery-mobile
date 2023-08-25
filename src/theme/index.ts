@@ -21,11 +21,11 @@ import { extendTheme } from 'native-base';
       },
       purple: {
         50: "#8047F8",
-        100: '#4B2995',
+        100: "#4B2995",
         200: "#EBE5F9",
       },
       red: {
-        50: '#C44117',
+        50: "#C44117",
         100: "#E8BAAB",
         200: "#F2DFD8"
       },
