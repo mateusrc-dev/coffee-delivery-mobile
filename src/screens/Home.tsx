@@ -5,6 +5,7 @@ import Coffee from "@assets/image.png";
 import { CoffeeItem } from "@components/CoffeeItem";
 import CoffeeImage1 from "@assets/Coffee1.png";
 import { ButtonComponent } from "@components/Button";
+import { ButtonIcon } from "@components/ButtonIcon";
 
 export function Home() {
   function handleClick(text: string) {
@@ -71,6 +72,12 @@ export function Home() {
           handleOnClick={handleClick}
           color="purple"
           text="SOU LINDO DEMAIS"
+        />
+        <ButtonIcon
+          backgroundColor="transparent"
+          handleOnClick={handleClick}
+          svg="trash"
+          svgColor="purple_dark"
         />
       </VStack>
     </View>
