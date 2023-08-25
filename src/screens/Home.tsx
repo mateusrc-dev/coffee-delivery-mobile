@@ -8,6 +8,7 @@ import { ButtonComponent } from "@components/Button";
 import { ButtonIcon } from "@components/ButtonIcon";
 import { Select } from "@components/Select";
 import { Tag } from "@components/Tag";
+import { InputNumber } from "@components/InputNumber";
 
 export function Home() {
   function handleClick(text: string) {
@@ -16,6 +17,10 @@ export function Home() {
 
   function handleSelect(state: boolean) {
     console.log(state);
+  }
+
+  function handleReturnsNumber(num: number) {
+    console.log(num);
   }
 
   return (
@@ -82,7 +87,15 @@ export function Home() {
         />
         <ButtonIcon handleOnClick={handleClick} svg="trash" />
         <Select handleOnClick={handleSelect} text="sou gostoso" />
-        <Tag handleOnClick={handleSelect} text="oiiieeee!" />
+        <VStack>
+          <Tag handleOnClick={handleSelect} text="oiiieeee!" />
+        </VStack>
+        <Box bgColor="purple.100">
+          <InputNumber
+            returnsCountNumber={handleReturnsNumber}
+            withBorder={true}
+          />
+        </Box>
       </VStack>
     </View>
   );

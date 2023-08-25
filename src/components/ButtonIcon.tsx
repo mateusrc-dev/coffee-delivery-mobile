@@ -1,10 +1,10 @@
 import { Button } from "native-base";
-import { Plus, Trash } from "phosphor-react-native";
+import { Plus, Minus, Trash } from "phosphor-react-native";
 import { useState } from "react";
 
 type Props = {
   handleOnClick: (text: string) => void;
-  svg: "plus" | "trash";
+  svg: "plus" | "trash" | "minus";
 };
 
 export function ButtonIcon({ handleOnClick, svg }: Props) {
@@ -23,7 +23,7 @@ export function ButtonIcon({ handleOnClick, svg }: Props) {
       <Button
         h={36}
         w={36}
-        backgroundColor="rgba(144,  203,  44,  0)"
+        backgroundColor="rgba(1,  1,  1,  0)"
         rounded={6}
         _pressed={{
           backgroundColor: "gray.600",
@@ -32,10 +32,14 @@ export function ButtonIcon({ handleOnClick, svg }: Props) {
         onPressIn={handleClick}
         onPressOut={handleClickOut}
       >
-        <Plus color={isPressed ? "#4B2995" : "#8047F8"} size={20} />
+        <Plus
+          color={isPressed ? "#4B2995" : "#8047F8"}
+          size={20}
+          weight="bold"
+        />
       </Button>
     );
-  } else {
+  } else if (svg === "trash") {
     return (
       <Button
         h={36}
@@ -50,6 +54,23 @@ export function ButtonIcon({ handleOnClick, svg }: Props) {
         onPressOut={handleClickOut}
       >
         <Trash color={isPressed ? "#4B2995" : "#8047F8"} size={20} />
+      </Button>
+    );
+  } else {
+    return (
+      <Button
+        h={36}
+        w={36}
+        backgroundColor="rgba(1, 1, 1, 0)"
+        rounded={6}
+        _pressed={{
+          backgroundColor: "gray.600",
+        }}
+        onPress={() => handleOnClick("texto no argumento")}
+        onPressIn={handleClick}
+        onPressOut={handleClickOut}
+      >
+        <Minus color="#8047F8" size={20} weight="bold" />
       </Button>
     );
   }
