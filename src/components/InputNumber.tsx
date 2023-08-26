@@ -19,7 +19,7 @@ export function InputNumber({ returnsCountNumber, withBorder }: Props) {
   }
 
   function handleClickSubtract() {
-    if (number <= 0) {
+    if (number <= 1) {
       return;
     } else {
       setNumber((prevState) => prevState - 1);
@@ -28,7 +28,7 @@ export function InputNumber({ returnsCountNumber, withBorder }: Props) {
 
   return (
     <HStack
-      maxWidth={100}
+      maxWidth={number >= 10 ? 104 : 95}
       h={"36"}
       rounded={6}
       alignItems="center"

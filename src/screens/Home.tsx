@@ -117,8 +117,8 @@ export function Home() {
         >
           <Image
             mt="-8"
-            w="120"
-            h="120"
+            w="16"
+            h="16"
             source={CoffeeImage1}
             alt="imagem do cafe"
           />

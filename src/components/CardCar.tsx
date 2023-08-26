@@ -1,4 +1,4 @@
-import { HStack, Text, VStack, View } from "native-base";
+import { Box, HStack, Text, VStack, View } from "native-base";
 import { Pressable } from "react-native";
 import { InputNumber } from "./InputNumber";
 import { ButtonIcon } from "./ButtonIcon";
@@ -28,13 +28,31 @@ export function CardCar({
 
   return (
     <Pressable onPress={() => handleOnClick("id")}>
-      <View flexDirection={"row"} maxWidth={375} bgColor="gray.800">
-        {children}
-        <HStack flex={1}>
-          <VStack>
-            <Text>{coffeeName}</Text>
-            <Text>{coffeeAmount}</Text>
-            <HStack flex={1}>
+      <View
+        px="8"
+        py="4"
+        display={"flex"}
+        flexDirection={"row"}
+        alignItems="center"
+        bgColor="gray.800"
+      >
+        <Box h={0} marginRight={5}>
+          {children}
+        </Box>
+        <HStack>
+          <VStack marginRight={30}>
+            <Text fontFamily={"body"} fontSize={"text_md"} color="gray.50">
+              {coffeeName}
+            </Text>
+            <Text
+              fontFamily={"body"}
+              fontSize={"text_sm"}
+              color="gray.300"
+              mb={2}
+            >
+              {coffeeAmount}
+            </Text>
+            <HStack space={2}>
               <InputNumber
                 returnsCountNumber={handleReturns}
                 withBorder={true}
@@ -42,7 +60,13 @@ export function CardCar({
               <ButtonIcon handleOnClick={handleClick} svg="trash" />
             </HStack>
           </VStack>
-          <Text>R$ {price}</Text>
+          <Text
+            fontFamily={"Baloo2_700Bold"}
+            fontSize={"text_md"}
+            color="gray.50"
+          >
+            R$ {price}
+          </Text>
         </HStack>
       </View>
     </Pressable>
