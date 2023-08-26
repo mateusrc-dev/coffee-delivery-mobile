@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 
 type Props = {
   returnsCountNumber: (num: number) => void;
-  withBorder: boolean;
+  withBorder?: boolean;
 };
 
-export function InputNumber({ returnsCountNumber, withBorder }: Props) {
+export function InputNumber({ returnsCountNumber, withBorder = false }: Props) {
   const [number, setNumber] = useState<number>(1);
 
   useEffect(() => {
