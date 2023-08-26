@@ -17,6 +17,7 @@ export function Select({ handleOnClick, text }: Props) {
     return (
       <Button
         h={10}
+        px="6"
         backgroundColor="rgba(1,  1,  1,  0)"
         borderWidth={1}
         borderColor="purple.50"
@@ -32,6 +33,7 @@ export function Select({ handleOnClick, text }: Props) {
     return (
       <Button
         h={10}
+        px="6"
         backgroundColor="gray.600"
         rounded={6}
         onPress={() => setIsSelected((prevState) => !prevState)}
