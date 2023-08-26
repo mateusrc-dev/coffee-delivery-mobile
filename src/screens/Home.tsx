@@ -12,33 +12,16 @@ import { MapPin, ShoppingCart } from "phosphor-react-native";
 import Coffee from "@assets/image.png";
 import { CoffeeItem } from "@components/CoffeeItem";
 import CoffeeImage1 from "@assets/Coffee1.png";
-import { ButtonComponent } from "@components/Button";
-import { ButtonIcon } from "@components/ButtonIcon";
-import { Select } from "@components/Select";
 import { Tag } from "@components/Tag";
-import { InputNumber } from "@components/InputNumber";
-import { CardCar } from "@components/CardCar";
 
 export function Home() {
-  function handleClick(text: string) {
-    console.log(`oie, ${text}`);
-  }
-
-  function handleSelect(state: boolean) {
-    console.log(state);
-  }
-
-  function handleReturnsNumber(num: number) {
-    console.log(num);
-  }
-
-  function handleClickCard() {
-    console.log("cliquei");
+  function handleTagClick() {
+    console.log("oie");
   }
 
   return (
-    <View flex="1" px={8} bgColor="gray.50">
-      <ScrollView>
+    <ScrollView flex="1">
+      <View bgColor="gray.50" px={8} h={342}>
         <HStack mt="10" justifyContent="space-between" alignItems="center">
           <HStack space={2} alignItems="center">
             <MapPin weight="fill" color="#8047F8" size={20} />
@@ -61,73 +44,300 @@ export function Home() {
             right={-20}
           />
         </View>
-        <View mt="120">
-          <CoffeeItem
-            coffeeName="Lindo"
-            coffeeType="traditional"
-            description="café delicia"
-            mode="vertical"
-            price={20.0}
+      </View>
+      <View bgColor="gray.800">
+        <ScrollView horizontal mt="-32">
+          <HStack space={8} p="8">
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="vertical"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="vertical"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="vertical"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="vertical"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+          </HStack>
+        </ScrollView>
+        <View bgColor="gray.800" px="8">
+          <Text
+            color="gray.200"
+            fontFamily="Baloo2_700Bold"
+            fontSize="text_md"
+            mb="3"
           >
-            <Image
-              mt="-8"
-              w="120"
-              h="120"
-              source={CoffeeImage1}
-              alt="imagem do cafe"
-            />
-          </CoffeeItem>
-          <CoffeeItem
-            coffeeName="Lindo"
-            coffeeType="traditional"
-            description="café delicia"
-            mode="horizontal"
-            price={20.0}
+            Nossos cafés
+          </Text>
+          <HStack mb="8" space="2">
+            <Tag handleOnClick={handleTagClick} text="TRADICIONAIS" />
+            <Tag handleOnClick={handleTagClick} text="DOCES" />
+            <Tag handleOnClick={handleTagClick} text="ESPECIAIS" />
+          </HStack>
+
+          <Text
+            color="gray.300"
+            fontFamily="Baloo2_700Bold"
+            fontSize="text_sm"
+            mb="8"
           >
-            <Image
-              mt="-8"
-              w="24"
-              h="24"
-              source={CoffeeImage1}
-              alt="imagem do cafe"
-            />
-          </CoffeeItem>
+            Tradicionais
+          </Text>
+          <VStack mb="12" space="8">
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+          </VStack>
+          <Text
+            color="gray.300"
+            fontFamily="Baloo2_700Bold"
+            fontSize="text_sm"
+            mb="8"
+          >
+            Doces
+          </Text>
+          <VStack mb="12" space="8">
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+          </VStack>
+          <Text
+            color="gray.300"
+            fontFamily="Baloo2_700Bold"
+            fontSize="text_sm"
+            mb="8"
+          >
+            Especiais
+          </Text>
+          <VStack mb="12" space="8">
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+            <CoffeeItem
+              coffeeName="Lindo"
+              coffeeType="traditional"
+              description="café delicia"
+              mode="horizontal"
+              price={20.0}
+            >
+              <Image
+                mt="-8"
+                w="120"
+                h="120"
+                source={CoffeeImage1}
+                alt="imagem do cafe"
+              />
+            </CoffeeItem>
+          </VStack>
         </View>
-        <ButtonComponent
-          handleOnClick={handleClick}
-          color="purple"
-          text="SOU LINDO DEMAIS"
-        />
-        <ButtonIcon handleOnClick={handleClick} svg="trash" />
-        <Select handleOnClick={handleSelect} text="sou gostoso" />
-        <VStack>
-          <Tag handleOnClick={handleSelect} text="oiiieeee!" />
-        </VStack>
-        <Box bgColor="purple.100">
-          <InputNumber
-            returnsCountNumber={handleReturnsNumber}
-            withBorder={true}
-          />
-        </Box>
-        <CardCar
-          coffeeAmount="200 ml"
-          coffeeName="Café lindo"
-          handleOnClick={handleClickCard}
-          price={50}
-        >
-          <Image
-            mt="-8"
-            w="16"
-            h="16"
-            source={CoffeeImage1}
-            alt="imagem do cafe"
-          />
-        </CardCar>
-        <InputNumber
-          returnsCountNumber={handleReturnsNumber}
-          withBorder={true}
-        />
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 }

@@ -21,6 +21,7 @@ export function Tag({ handleOnClick, text }: Props) {
         px={3}
         backgroundColor="purple.50"
         borderWidth={1}
+        borderColor="purple.50"
         rounded={"full"}
         onPress={() => setIsSelected((prevState) => !prevState)}
       >
