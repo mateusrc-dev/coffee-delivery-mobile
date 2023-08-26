@@ -8,8 +8,9 @@ import {
 import { Baloo2_700Bold } from "@expo-google-fonts/baloo-2";
 import { Loading } from "@components/Loading";
 import { THEME } from "@theme/index";
+import { Cart } from "@screens/Cart";
 // import { Home } from "@screens/Home";
-import { Details } from "@screens/Details";
+// import { Details } from "@screens/Details";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -25,7 +26,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Details /> : <Loading />}
+      {fontsLoaded ? <Cart /> : <Loading />}
     </NativeBaseProvider>
   );
 }
