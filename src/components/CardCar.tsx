@@ -35,6 +35,8 @@ export function CardCar({
         flexDirection={"row"}
         alignItems="center"
         bgColor="gray.800"
+        borderBottomWidth={1}
+        borderBottomColor="gray.400"
       >
         <Box h={0} marginRight={5}>
           {children}

@@ -123,6 +123,10 @@ export function Home() {
             alt="imagem do cafe"
           />
         </CardCar>
+        <InputNumber
+          returnsCountNumber={handleReturnsNumber}
+          withBorder={true}
+        />
       </ScrollView>
     </View>
   );
