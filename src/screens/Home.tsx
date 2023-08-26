@@ -22,7 +22,12 @@ export function Home() {
   return (
     <ScrollView flex="1">
       <View bgColor="gray.50" px={8} h={342}>
-        <HStack mt="10" justifyContent="space-between" alignItems="center">
+        <HStack
+          mt="10"
+          mb="12"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <HStack space={2} alignItems="center">
             <MapPin weight="fill" color="#8047F8" size={20} />
             <Text fontSize="text_md" fontFamily="body" color="gray.800">
@@ -31,7 +36,12 @@ export function Home() {
           </HStack>
           <ShoppingCart weight="fill" color="#C47F17" size={20} />
         </HStack>
-        <Text color="gray.900" fontFamily="heading_baloo" fontSize="text_lg">
+        <Text
+          color="gray.900"
+          fontFamily="heading_baloo"
+          fontSize="text_lg"
+          mb="4"
+        >
           Encontre o café perfeito para qualquer hora do dia
         </Text>
         <View flex="1">
@@ -46,7 +56,7 @@ export function Home() {
         </View>
       </View>
       <View bgColor="gray.800">
-        <ScrollView horizontal mt="-32">
+        <ScrollView horizontal mt="-16">
           <HStack space={8} p="8">
             <CoffeeItem
               coffeeName="Lindo"
