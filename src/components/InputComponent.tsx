@@ -1,8 +1,8 @@
-import { Icon, Input, Stack } from "native-base";
+import { Icon, Input, IInputProps, Stack } from "native-base";
 import { MagnifyingGlass } from "phosphor-react-native";
 import { useState } from "react";
 
-export function InputComponent() {
+export function InputComponent({ ...rest }: IInputProps) {
   const [text, setText] = useState("");
   const [focus, setFocus] = useState(false);
 
@@ -50,7 +50,7 @@ export function InputComponent() {
             />
           )
         }
-        placeholder="Pesquisar"
+        {...rest}
       />
     </Stack>
   );

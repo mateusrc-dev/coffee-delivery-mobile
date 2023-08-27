@@ -1,4 +1,4 @@
-import { InputComponent } from "@components/Input";
+import { InputComponent } from "@components/InputComponent";
 import {
   Box,
   HStack,
@@ -20,7 +20,10 @@ export function Home() {
   }
 
   return (
-    <ScrollView flex="1">
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      showsVerticalScrollIndicator={false}
+    >
       <View bgColor="gray.50" px={8} h={342}>
         <HStack
           mt="10"
@@ -45,7 +48,11 @@ export function Home() {
           Encontre o café perfeito para qualquer hora do dia
         </Text>
         <View flex="1">
-          <InputComponent />
+          <InputComponent
+            keyboardType="default"
+            placeholder="Pesquisar"
+            autoCapitalize="none"
+          />
           <Image
             source={Coffee}
             alt="sementes de cafe"
@@ -56,7 +63,7 @@ export function Home() {
         </View>
       </View>
       <View bgColor="gray.800">
-        <ScrollView horizontal mt="-16">
+        <ScrollView horizontal mt="-16" showsHorizontalScrollIndicator={false}>
           <HStack space={8} p="8">
             <CoffeeItem
               coffeeName="Lindo"

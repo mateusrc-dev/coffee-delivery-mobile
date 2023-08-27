@@ -9,8 +9,8 @@ import { Baloo2_700Bold } from "@expo-google-fonts/baloo-2";
 import { Loading } from "@components/Loading";
 import { THEME } from "@theme/index";
 // import { Cart } from "@screens/Cart";
-import { FinishedOrder } from "@screens/FinishedOrder";
-// import { Home } from "@screens/Home";
+// import { FinishedOrder } from "@screens/FinishedOrder";
+import { Home } from "@screens/Home";
 // import { Details } from "@screens/Details";
 
 export default function App() {
@@ -27,7 +27,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <FinishedOrder /> : <Loading />}
+      {fontsLoaded ? <Home /> : <Loading />}
     </NativeBaseProvider>
   );
 }

@@ -1,15 +1,21 @@
-import { Button, Text } from "native-base";
+import { Button, IButtonProps, Text } from "native-base";
 
-type Props = {
+type Props = IButtonProps & {
   handleOnClick: (text: string) => void;
   color: "yellow" | "purple";
   text: string;
 };
 
-export function ButtonComponent({ handleOnClick, color, text }: Props) {
+export function ButtonComponent({
+  handleOnClick,
+  color,
+  text,
+  ...props
+}: Props) {
   if (color === "yellow") {
     return (
       <Button
+        {...props}
         h={46}
         backgroundColor="orange.100"
         rounded={6}

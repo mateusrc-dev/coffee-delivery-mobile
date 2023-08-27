@@ -1,13 +1,13 @@
-import { Button } from "native-base";
+import { Button, IButtonProps } from "native-base";
 import { Plus, Minus, Trash } from "phosphor-react-native";
 import { useState } from "react";
 
-type Props = {
+type Props = IButtonProps & {
   handleOnClick: (text: string) => void;
   svg: "plus" | "trash" | "minus";
 };
 
-export function ButtonIcon({ handleOnClick, svg }: Props) {
+export function ButtonIcon({ handleOnClick, svg, ...props }: Props) {
   const [isPressed, setIsPressed] = useState(false);
 
   function handleClick() {
@@ -21,6 +21,7 @@ export function ButtonIcon({ handleOnClick, svg }: Props) {
   if (svg === "plus") {
     return (
       <Button
+        {...props}
         h={36}
         w={36}
         backgroundColor="rgba(1,  1,  1,  0)"
