@@ -9,15 +9,29 @@ import {
   VStack,
   View,
 } from "native-base";
-import { MapPin, ShoppingCart } from "phosphor-react-native";
+import { MapPin } from "phosphor-react-native";
 import Coffee from "@assets/image.png";
 import { CoffeeItem } from "@components/CoffeeItem";
 import CoffeeImage1 from "@assets/Coffee1.png";
 import { Tag } from "@components/Tag";
+import { TouchableOpacity } from "react-native";
+import { AppNavigationRoutesProps } from "@routes/app.routes";
+import { useNavigation } from "@react-navigation/native";
+import { Cart } from "@components/Cart";
 
 export function Home() {
+  const navigation = useNavigation<AppNavigationRoutesProps>();
+
   function handleTagClick() {
     console.log("oie");
+  }
+
+  function handleOnClickCart() {
+    navigation.navigate("cart");
+  }
+
+  function handleOnClickCoffeeItem() {
+    navigation.navigate("details", { coffeeId: "1" });
   }
 
   return (
@@ -44,7 +58,9 @@ export function Home() {
               Porto alegre, RS
             </Text>
           </HStack>
-          <ShoppingCart weight="fill" color="#C47F17" size={20} />
+          <TouchableOpacity onPress={handleOnClickCart}>
+            <Cart amount={0} />
+          </TouchableOpacity>
         </HStack>
         <Text
           color="gray.900"
@@ -72,21 +88,23 @@ export function Home() {
       <View bgColor="gray.800">
         <ScrollView horizontal mt="-16" showsHorizontalScrollIndicator={false}>
           <HStack space={8} p="8">
-            <CoffeeItem
-              coffeeName="Lindo"
-              coffeeType="traditional"
-              description="café delicia"
-              mode="vertical"
-              price={20.0}
-            >
-              <Image
-                mt="-8"
-                w="120"
-                h="120"
-                source={CoffeeImage1}
-                alt="imagem do cafe"
-              />
-            </CoffeeItem>
+            <TouchableOpacity onPress={handleOnClickCoffeeItem}>
+              <CoffeeItem
+                coffeeName="Lindo"
+                coffeeType="traditional"
+                description="café delicia"
+                mode="vertical"
+                price={20.0}
+              >
+                <Image
+                  mt="-8"
+                  w="120"
+                  h="120"
+                  source={CoffeeImage1}
+                  alt="imagem do cafe"
+                />
+              </CoffeeItem>
+            </TouchableOpacity>
 
             <CoffeeItem
               coffeeName="Lindo"
@@ -159,21 +177,23 @@ export function Home() {
             Tradicionais
           </Text>
           <VStack mb="12" space="8">
-            <CoffeeItem
-              coffeeName="Lindo"
-              coffeeType="traditional"
-              description="café delicia"
-              mode="horizontal"
-              price={20.0}
-            >
-              <Image
-                mt="-8"
-                w="120"
-                h="120"
-                source={CoffeeImage1}
-                alt="imagem do cafe"
-              />
-            </CoffeeItem>
+            <TouchableOpacity onPress={handleOnClickCoffeeItem}>
+              <CoffeeItem
+                coffeeName="Lindo"
+                coffeeType="traditional"
+                description="café delicia"
+                mode="horizontal"
+                price={20.0}
+              >
+                <Image
+                  mt="-8"
+                  w="120"
+                  h="120"
+                  source={CoffeeImage1}
+                  alt="imagem do cafe"
+                />
+              </CoffeeItem>
+            </TouchableOpacity>
             <CoffeeItem
               coffeeName="Lindo"
               coffeeType="traditional"

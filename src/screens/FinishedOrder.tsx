@@ -1,9 +1,15 @@
 import { Center, Image, StatusBar, Text } from "native-base";
 import Illustration from "@assets/Illustration.png";
 import { ButtonComponent } from "@components/Button";
+import { AppNavigationRoutesProps } from "@routes/app.routes";
+import { useNavigation } from "@react-navigation/native";
 
 export function FinishedOrder() {
-  function handleOnClickInButton() {}
+  const navigation = useNavigation<AppNavigationRoutesProps>();
+
+  function handleOnClickInButton() {
+    navigation.navigate("home");
+  }
 
   return (
     <Center flex={1}>

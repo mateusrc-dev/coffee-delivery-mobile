@@ -11,11 +11,22 @@ import {
 import { ArrowLeft } from "phosphor-react-native";
 import CoffeeImage1 from "@assets/Coffee1.png";
 import { ButtonComponent } from "@components/Button";
+import { TouchableOpacity } from "react-native";
+import { AppNavigationRoutesProps } from "@routes/app.routes";
+import { useNavigation } from "@react-navigation/native";
 
 export function Cart() {
+  const navigation = useNavigation<AppNavigationRoutesProps>();
+
   function handleOnClick() {}
 
-  function handleOnClickButton() {}
+  function handleOnClickButton() {
+    navigation.navigate("finishedOrder");
+  }
+
+  function handleOnClickArrowLeft() {
+    navigation.goBack();
+  }
 
   return (
     <View flex="1" bg="gray.800">
@@ -35,7 +46,9 @@ export function Cart() {
             borderBottomWidth={1}
             borderBottomColor="gray.400"
           >
-            <ArrowLeft color="#272221" size="24" />
+            <TouchableOpacity onPress={handleOnClickArrowLeft}>
+              <ArrowLeft color="#272221" size="24" />
+            </TouchableOpacity>
             <Text
               color="gray.100"
               fontFamily="heading_baloo"

@@ -1,12 +1,4 @@
-import {
-  Box,
-  HStack,
-  Image,
-  ScrollView,
-  StatusBar,
-  Text,
-  View,
-} from "native-base";
+import { HStack, Image, StatusBar, Text, View } from "native-base";
 import { Cart } from "@components/Cart";
 import { ArrowLeft } from "phosphor-react-native";
 import Smoke from "@assets/Smoke.png";
@@ -14,8 +6,13 @@ import Coffee from "@assets/Coffee.png";
 import { Select } from "@components/Select";
 import { InputNumber } from "@components/InputNumber";
 import { ButtonComponent } from "@components/Button";
+import { TouchableOpacity } from "react-native";
+import { AppNavigationRoutesProps } from "@routes/app.routes";
+import { useNavigation } from "@react-navigation/native";
 
 export function Details() {
+  const navigation = useNavigation<AppNavigationRoutesProps>();
+
   function handleClick1() {}
 
   function handleClick2() {}
@@ -24,7 +21,17 @@ export function Details() {
 
   function handleReturnsInputNumber() {}
 
-  function handleOnClickInputNumber() {}
+  function handleOnClickButton() {
+    navigation.navigate("cart");
+  }
+
+  function handleOnClickArrowLeft() {
+    navigation.goBack();
+  }
+
+  function handleOnClickCart() {
+    navigation.navigate("cart");
+  }
 
   return (
     <View bgColor="gray.800" flex={1}>
@@ -36,8 +43,12 @@ export function Details() {
 
       <View h="546" px="8" bg="gray.50">
         <HStack mt="12" alignItems="center" justifyContent="space-between">
-          <ArrowLeft color="#ffffff" size="24" />
-          <Cart amount={3} />
+          <TouchableOpacity onPress={handleOnClickArrowLeft}>
+            <ArrowLeft color="#ffffff" size="24" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleOnClickCart}>
+            <Cart amount={3} />
+          </TouchableOpacity>
         </HStack>
         <View
           bgColor="gray.100"
@@ -114,7 +125,7 @@ export function Details() {
           <ButtonComponent
             color="purple"
             text="ADICIONAR"
-            handleOnClick={handleOnClickInputNumber}
+            handleOnClick={handleOnClickButton}
           />
         </HStack>
       </View>
