@@ -1,5 +1,13 @@
 import { CardCar } from "@components/CardCar";
-import { HStack, Image, ScrollView, Text, VStack, View } from "native-base";
+import {
+  HStack,
+  Image,
+  ScrollView,
+  StatusBar,
+  Text,
+  VStack,
+  View,
+} from "native-base";
 import { ArrowLeft } from "phosphor-react-native";
 import CoffeeImage1 from "@assets/Coffee1.png";
 import { ButtonComponent } from "@components/Button";
@@ -11,6 +19,12 @@ export function Cart() {
 
   return (
     <View flex="1" bg="gray.800">
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent
+      />
+
       <View flex={1}>
         <ScrollView>
           <HStack

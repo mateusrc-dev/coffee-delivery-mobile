@@ -1,4 +1,4 @@
-import { Center, Image, Text } from "native-base";
+import { Center, Image, StatusBar, Text } from "native-base";
 import Illustration from "@assets/Illustration.png";
 import { ButtonComponent } from "@components/Button";
 
@@ -7,6 +7,12 @@ export function FinishedOrder() {
 
   return (
     <Center flex={1}>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent
+      />
+
       <Image
         w="270"
         h="161"

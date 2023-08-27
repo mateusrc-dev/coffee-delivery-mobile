@@ -1,4 +1,12 @@
-import { Box, HStack, Image, ScrollView, Text, View } from "native-base";
+import {
+  Box,
+  HStack,
+  Image,
+  ScrollView,
+  StatusBar,
+  Text,
+  View,
+} from "native-base";
 import { Cart } from "@components/Cart";
 import { ArrowLeft } from "phosphor-react-native";
 import Smoke from "@assets/Smoke.png";
@@ -20,6 +28,12 @@ export function Details() {
 
   return (
     <View bgColor="gray.800" flex={1}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+
       <View h="546" px="8" bg="gray.50">
         <HStack mt="12" alignItems="center" justifyContent="space-between">
           <ArrowLeft color="#ffffff" size="24" />

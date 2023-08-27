@@ -4,6 +4,7 @@ import {
   HStack,
   Image,
   ScrollView,
+  StatusBar,
   Text,
   VStack,
   View,
@@ -24,6 +25,12 @@ export function Home() {
       contentContainerStyle={{ flexGrow: 1 }}
       showsVerticalScrollIndicator={false}
     >
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+
       <View bgColor="gray.50" px={8} h={342}>
         <HStack
           mt="10"

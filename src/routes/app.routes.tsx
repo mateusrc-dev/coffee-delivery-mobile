@@ -1,11 +1,14 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from "@react-navigation/native-stack";
 import { Cart } from "@screens/Cart";
 import { CoffeeDelivery } from "@screens/CoffeeDelivery";
 import { Details } from "@screens/Details";
 import { FinishedOrder } from "@screens/FinishedOrder";
 import { Home } from "@screens/Home";
 
-type Routes = {
+type RoutesProps = {
   cart: undefined;
   details: { coffeeId: string };
   coffeeDelivery: undefined;
@@ -13,7 +16,9 @@ type Routes = {
   home: undefined;
 };
 
-const { Navigator, Screen } = createNativeStackNavigator();
+export type AppNavigationRoutesProps = NativeStackNavigationProp<RoutesProps>;
+
+const { Navigator, Screen } = createNativeStackNavigator<RoutesProps>();
 
 export function RoutesApp() {
   return (
