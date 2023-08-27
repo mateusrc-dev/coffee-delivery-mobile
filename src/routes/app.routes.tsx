@@ -15,14 +15,14 @@ type Routes = {
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
-export function Routes() {
+export function RoutesApp() {
   return (
-    <Navigator>
-      <Screen name="cart" component={Cart} />
+    <Navigator screenOptions={{ headerShown: false }}>
       <Screen name="coffeeDelivery" component={CoffeeDelivery} />
-      <Screen name="details" component={Details} />
-      <Screen name="finishedOrder" component={FinishedOrder} />
       <Screen name="home" component={Home} />
+      <Screen name="details" component={Details} />
+      <Screen name="cart" component={Cart} />
+      <Screen name="finishedOrder" component={FinishedOrder} />
     </Navigator>
   );
 }
