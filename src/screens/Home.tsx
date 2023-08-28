@@ -1,5 +1,6 @@
 import { InputComponent } from "@components/InputComponent";
 import {
+  FlatList,
   HStack,
   Image,
   Pressable,
@@ -7,7 +8,6 @@ import {
   SectionList,
   StatusBar,
   Text,
-  VStack,
   View,
 } from "native-base";
 import { MapPin } from "phosphor-react-native";
@@ -30,12 +30,19 @@ import { TouchableOpacity } from "react-native";
 import { AppNavigationRoutesProps } from "@routes/app.routes";
 import { useNavigation } from "@react-navigation/native";
 import { Cart } from "@components/Cart";
-import { useState } from "react";
-import { CoffeesProps, dataCoffees } from "@data/dataOfCoffees";
+import { useState, useEffect } from "react";
+import { CoffeeProps, CoffeesProps, dataCoffees } from "@data/dataOfCoffees";
 
 export function Home() {
   const [coffees] = useState<CoffeesProps[]>(dataCoffees);
+  const [coffeesFiltered, setCoffeesFiltered] = useState<CoffeeProps[]>([]);
+  const [text, setText] = useState<string>("");
+  const [coffeesFilteredTwo, setCoffeesFilteredTwo] = useState<CoffeeProps[]>(
+    []
+  );
   const navigation = useNavigation<AppNavigationRoutesProps>();
+
+  console.log(text);
 
   function handleTagClick() {
     console.log("oie");
@@ -97,6 +104,28 @@ export function Home() {
     }
   }
 
+  function returnsTextInput(text: string) {
+    setText(text);
+  }
+
+  useEffect(() => {
+    const newCoffeesFiltered = coffeesFiltered.filter((coffee) =>
+      coffee.coffeeName.toLowerCase().includes(text)
+    );
+
+    setCoffeesFilteredTwo(newCoffeesFiltered);
+  }, [text]);
+
+  useEffect(() => {
+    let coffeesArray = [];
+    for (var i = 0; i < coffees.length; i++) {
+      for (var a = 0; a < coffees[i].data.length; a++) {
+        coffeesArray.push(coffees[i].data[a]);
+      }
+    }
+    setCoffeesFiltered(coffeesArray);
+  }, []);
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -138,6 +167,7 @@ export function Home() {
             keyboardType="default"
             placeholder="Pesquisar"
             autoCapitalize="none"
+            returnsInputText={returnsTextInput}
           />
           <Image
             source={Coffee}
@@ -149,12 +179,11 @@ export function Home() {
         </View>
       </View>
       <View bgColor="gray.800">
-        <SectionList
-          mt="-10"
+        <FlatList
+          mt="-16"
           minWidth="full"
           horizontal
-          sections={coffees}
-          data={coffees}
+          data={text.length === 0 ? coffeesFiltered : coffeesFilteredTwo}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Pressable onPress={() => handleOnClickCoffeeItem(item.id)} mr="8">

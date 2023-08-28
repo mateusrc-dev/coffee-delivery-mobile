@@ -1,8 +1,12 @@
 import { Icon, Input, IInputProps, Stack } from "native-base";
 import { MagnifyingGlass } from "phosphor-react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export function InputComponent({ ...rest }: IInputProps) {
+type Props = IInputProps & {
+  returnsInputText: (text: string) => void;
+};
+
+export function InputComponent({ returnsInputText, ...rest }: Props) {
   const [text, setText] = useState("");
   const [focus, setFocus] = useState(false);
 
@@ -13,6 +17,10 @@ export function InputComponent({ ...rest }: IInputProps) {
   function handleBlur() {
     setFocus(false);
   }
+
+  useEffect(() => {
+    returnsInputText(text);
+  }, [text]);
 
   return (
     <Stack space={4} w="100%" alignItems="center">

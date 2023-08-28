@@ -1,4 +1,4 @@
-export type Coffee = {
+export type CoffeeProps = {
   id: string;
   coffeeImage: string;
   coffeeType: string;
@@ -9,7 +9,7 @@ export type Coffee = {
 
 export type CoffeesProps = {
   title: string;
-  data: Coffee[];
+  data: CoffeeProps[];
 };
 
 export const dataCoffees: CoffeesProps[] = [
