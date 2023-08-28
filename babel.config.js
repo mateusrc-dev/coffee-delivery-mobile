@@ -19,7 +19,8 @@ module.exports = function(api) {
             "@contexts": "./src/contexts",
             "@routes": "./src/routes",
             "@notifications": "./src/notifications",
-            "@theme": "./src/theme"
+            "@theme": "./src/theme",
+            "@data": "./src/data"
           }
         }
       ]

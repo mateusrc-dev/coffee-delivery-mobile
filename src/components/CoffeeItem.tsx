@@ -6,7 +6,7 @@ type Props = {
   coffeeName: string;
   description: string;
   price: number;
-  coffeeType: "traditional" | "candy" | "special";
+  coffeeType: string;
 };
 
 export function CoffeeItem({
@@ -99,7 +99,7 @@ export function CoffeeItem({
   } else {
     return (
       <HStack
-        w={311}
+        w="full"
         h={120}
         alignItems="center"
         backgroundColor="gray.700"
@@ -113,10 +113,22 @@ export function CoffeeItem({
         {children}
 
         <VStack>
-          <Text fontFamily={"heading_baloo"} fontSize="20" mt="3.5">
+          <Text
+            fontFamily={"heading_baloo"}
+            fontSize="20"
+            mt="3.5"
+            flexWrap={"nowrap"}
+          >
             {coffeeName}
           </Text>
-          <Text fontFamily="body" color="gray.300" fontSize="text_xs" mt="0">
+          <Text
+            fontFamily="body"
+            maxWidth={200}
+            color="gray.300"
+            fontSize="text_xs"
+            mt="0"
+            flexWrap={"wrap"}
+          >
             {description}
           </Text>
           <HStack alignItems={"baseline"} mt="2">
