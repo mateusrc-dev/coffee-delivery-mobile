@@ -10,7 +10,7 @@ import {
   Text,
   View,
 } from "native-base";
-import { MapPin } from "phosphor-react-native";
+import { MapPin, Warning } from "phosphor-react-native";
 import Coffee from "@assets/image.png";
 import { CoffeeItem } from "@components/CoffeeItem";
 import CoffeeImage1 from "@assets/Coffee1.png";
@@ -206,6 +206,14 @@ export function Home() {
           )}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingVertical: 30, paddingHorizontal: 32 }}
+          ListEmptyComponent={() => (
+            <HStack alignItems="center" space="2">
+              <Warning color="#C44117" size={30} />
+              <Text color="red.50" fontFamily="heading" fontSize="title_md">
+                Não foi encontrado resultados!
+              </Text>
+            </HStack>
+          )}
         />
 
         <View bgColor="gray.800" px="8">
