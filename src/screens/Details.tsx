@@ -8,10 +8,25 @@ import { InputNumber } from "@components/InputNumber";
 import { ButtonComponent } from "@components/Button";
 import { TouchableOpacity } from "react-native";
 import { AppNavigationRoutesProps } from "@routes/app.routes";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { CoffeeProps, dataCoffees } from "@data/dataOfCoffees";
+import { useState, useEffect } from "react";
+
+type RoutesParamsProps = {
+  coffeeId: string;
+};
 
 export function Details() {
+  const [coffee, setCoffee] = useState<CoffeeProps>();
+  const route = useRoute();
+
+  console.log(coffee);
+
   const navigation = useNavigation<AppNavigationRoutesProps>();
+
+  const { coffeeId } = route.params as RoutesParamsProps;
+
+  console.log(coffeeId);
 
   function handleClick1() {}
 
@@ -32,6 +47,21 @@ export function Details() {
   function handleOnClickCart() {
     navigation.navigate("cart");
   }
+
+  useEffect(() => {
+    let coffeesArray = [];
+    for (var i = 0; i < dataCoffees.length; i++) {
+      for (var a = 0; a < dataCoffees[i].data.length; a++) {
+        coffeesArray.push(dataCoffees[i].data[a]);
+      }
+    }
+
+    const coffeeSelected = coffeesArray.filter(
+      (coffee) => coffee.id === coffeeId
+    );
+
+    setCoffee(coffeeSelected[0]);
+  }, []);
 
   return (
     <View bgColor="gray.800" flex={1}>
