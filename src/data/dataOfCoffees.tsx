@@ -5,6 +5,8 @@ export type CoffeeProps = {
   coffeeName: string;
   description: string;
   price: number;
+  amount?: string;
+  amountOfCoffee?: number;
 };
 
 export type CoffeesProps = {

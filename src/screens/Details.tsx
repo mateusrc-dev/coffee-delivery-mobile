@@ -1,4 +1,4 @@
-import { HStack, Image, StatusBar, Text, View } from "native-base";
+import { HStack, Image, StatusBar, Text, View, useToast } from "native-base";
 import { Cart } from "@components/Cart";
 import { ArrowLeft } from "phosphor-react-native";
 import Smoke from "@assets/Smoke.png";
@@ -11,6 +11,7 @@ import { AppNavigationRoutesProps } from "@routes/app.routes";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { CoffeeProps, dataCoffees } from "@data/dataOfCoffees";
 import { useState, useEffect } from "react";
+import { CoffeeStorageProps, storageCoffeeSave } from "@storage/storageCoffee";
 
 type RoutesParamsProps = {
   coffeeId: string;
@@ -18,26 +19,61 @@ type RoutesParamsProps = {
 
 export function Details() {
   const [coffee, setCoffee] = useState<CoffeeProps>();
+  const [amount, setAmount] = useState<string>("");
+  const [amountCoffee, setAmountCoffee] = useState<number>(0);
   const route = useRoute();
-
-  console.log(coffee);
+  const toast = useToast();
 
   const navigation = useNavigation<AppNavigationRoutesProps>();
 
   const { coffeeId } = route.params as RoutesParamsProps;
 
   console.log(coffeeId);
+  console.log(coffee);
 
-  function handleClick1() {}
+  function handleClick1() {
+    setAmount("114ml");
+  }
 
-  function handleClick2() {}
+  function handleClick2() {
+    setAmount("140ml");
+  }
 
-  function handleClick3() {}
+  function handleClick3() {
+    setAmount("227ml");
+  }
 
-  function handleReturnsInputNumber() {}
+  function handleReturnsInputNumber(number: number) {
+    setAmountCoffee(number);
+  }
+
+  function generateRandomId() {
+    const randomNumber = Math.random();
+    const randomId = Math.floor(randomNumber * 1000000);
+    return randomId.toString();
+  }
 
   function handleOnClickButton() {
-    navigation.navigate("cart");
+    const newCoffee: CoffeeStorageProps = {
+      id: generateRandomId(),
+      coffeeImage: coffee?.coffeeImage,
+      coffeeType: coffee?.coffeeType,
+      coffeeName: coffee?.coffeeName,
+      description: coffee?.description,
+      price: coffee?.price,
+      amount: amount,
+      amountOfCoffee: amountCoffee,
+    };
+
+    storageCoffeeSave(newCoffee);
+
+    toast.show({
+      title: "Café colocado no carrinho com sucesso!",
+      placement: "top",
+      bgColor: "red.50",
+    });
+
+    navigation.navigate("home");
   }
 
   function handleOnClickArrowLeft() {
@@ -56,12 +92,14 @@ export function Details() {
       }
     }
 
-    const coffeeSelected = coffeesArray.filter(
+    const coffeeSelected = coffeesArray.find(
       (coffee) => coffee.id === coffeeId
     );
 
-    setCoffee(coffeeSelected[0]);
-  }, []);
+    if (coffeeSelected !== undefined) {
+      setCoffee(coffeeSelected);
+    }
+  }, [coffeeId]);
 
   return (
     <View bgColor="gray.800" flex={1}>
@@ -92,12 +130,14 @@ export function Details() {
           mb="3"
         >
           <Text fontFamily="heading" fontSize="10" color="gray.900">
-            ESPECIAL
+            {coffee?.coffeeType === "traditional" && "TRADICIONAL"}
+            {coffee?.coffeeType === "special" && "ESPECIAL"}
+            {coffee?.coffeeType === "candy" && "DOCE"}
           </Text>
         </View>
         <HStack alignItems="center" justifyContent="space-between">
           <Text color="gray.900" fontFamily="heading_baloo" fontSize="title_lg">
-            Irlandês
+            {coffee?.coffeeName}
           </Text>
           <HStack alignItems="baseline">
             <Text color="orange.100" fontFamily="body">
@@ -108,12 +148,12 @@ export function Details() {
               fontFamily="heading_baloo"
               fontSize="title_lg"
             >
-              9,90
+              {String(coffee?.price).replace(".", ",").padEnd(4, "0")}
             </Text>
           </HStack>
         </HStack>
         <Text fontFamily="body" fontSize="text_md" color="gray.400" mt="5">
-          Bebida a base de café, uísque irlandês, açúcar e chantilly
+          {coffee?.description}
         </Text>
         <View alignItems="center" justifyContent="center" mt="2">
           <Image
