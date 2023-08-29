@@ -28,10 +28,14 @@ import CoffeeImage12 from "@assets/Coffee12.png";
 import { Tag } from "@components/Tag";
 import { TouchableOpacity } from "react-native";
 import { AppNavigationRoutesProps } from "@routes/app.routes";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { Cart } from "@components/Cart";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { CoffeeProps, CoffeesProps, dataCoffees } from "@data/dataOfCoffees";
+import {
+  CoffeeStorageProps,
+  storageGetDataCoffees,
+} from "@storage/storageCoffee";
 
 export function Home() {
   const [coffees] = useState<CoffeesProps[]>(dataCoffees);
@@ -40,7 +44,9 @@ export function Home() {
   const [coffeesFilteredTwo, setCoffeesFilteredTwo] = useState<CoffeeProps[]>(
     []
   );
+  const [coffeesInCar, setCoffeesInCar] = useState<CoffeeStorageProps[]>();
   const navigation = useNavigation<AppNavigationRoutesProps>();
+  const [refresh, setRefresh] = useState(false);
 
   console.log(text);
 
@@ -126,6 +132,29 @@ export function Home() {
     setCoffeesFiltered(coffeesArray);
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchCoffeesStorage() {
+        try {
+          const coffeesStorage = await storageGetDataCoffees();
+
+          setCoffeesInCar(coffeesStorage);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      fetchCoffeesStorage();
+    }, [refresh])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      setRefresh(true);
+      setRefresh(false);
+    }, [])
+  );
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -151,7 +180,7 @@ export function Home() {
             </Text>
           </HStack>
           <TouchableOpacity onPress={handleOnClickCart}>
-            <Cart amount={0} />
+            <Cart amount={Number(coffeesInCar?.length)} />
           </TouchableOpacity>
         </HStack>
         <Text

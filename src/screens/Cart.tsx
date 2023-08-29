@@ -30,6 +30,7 @@ import { useEffect, useState } from "react";
 import {
   CoffeeStorageProps,
   deleteAllStorageCoffees,
+  deleteCoffeeStorageById,
   storageGetDataCoffees,
 } from "@storage/storageCoffee";
 
@@ -40,7 +41,12 @@ export function Cart() {
 
   console.log(coffeesInCar);
 
-  function handleOnClick() {}
+  async function handleOnClick(id: string) {
+    setLoading(false);
+    const coffeesWithoutCoffeeDeleted = await deleteCoffeeStorageById(id);
+    setCoffeesInCar(coffeesWithoutCoffeeDeleted);
+    setLoading(true);
+  }
 
   function handleOnClickButton() {
     deleteAllStorageCoffees();
@@ -150,6 +156,7 @@ export function Cart() {
                 }
                 handleOnClick={handleOnClick}
                 price={item.price === undefined ? 1 : Number(item.price)}
+                id={item.id}
               >
                 <Image
                   mt="-8"

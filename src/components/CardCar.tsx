@@ -1,5 +1,4 @@
 import { Box, HStack, Text, VStack, View } from "native-base";
-import { Pressable } from "react-native";
 import { InputNumber } from "./InputNumber";
 import { ButtonIcon } from "./ButtonIcon";
 
@@ -9,6 +8,7 @@ type Props = {
   coffeeName: string;
   coffeeAmount: string;
   price: number;
+  id: string;
 };
 
 export function CardCar({
@@ -17,17 +17,14 @@ export function CardCar({
   coffeeName,
   coffeeAmount,
   price,
+  id,
 }: Props) {
   function handleReturns(number: number) {
     console.log(number);
   }
 
-  function handleClick(text: string) {
-    console.log(text);
-  }
-
   return (
-    <Pressable onPress={() => handleOnClick("id")}>
+    <View>
       <View
         px="8"
         py="4"
@@ -59,7 +56,7 @@ export function CardCar({
                 returnsCountNumber={handleReturns}
                 withBorder={true}
               />
-              <ButtonIcon handleOnClick={handleClick} svg="trash" />
+              <ButtonIcon handleOnClick={() => handleOnClick(id)} svg="trash" />
             </HStack>
           </VStack>
           <Text
@@ -71,6 +68,6 @@ export function CardCar({
           </Text>
         </HStack>
       </View>
-    </Pressable>
+    </View>
   );
 }
