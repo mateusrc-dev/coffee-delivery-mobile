@@ -73,7 +73,7 @@ export function Details() {
       amountOfCoffee: amountCoffee,
     };
 
-    storageCoffeeSave(newCoffee);
+    await storageCoffeeSave(newCoffee);
 
     toast.show({
       title: "Café inserido no carrinho com sucesso!",
@@ -81,7 +81,7 @@ export function Details() {
       bgColor: "red.50",
     });
 
-    navigation.navigate("home");
+    navigation.navigate("cart");
   }
 
   function handleOnClickArrowLeft() {

@@ -41,8 +41,6 @@ export function Cart() {
   const navigation = useNavigation<AppNavigationRoutesProps>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  console.log(coffeesInCar);
-
   async function handleOnClick(id: string) {
     setLoading(false);
     const coffeesWithoutCoffeeDeleted = await deleteCoffeeStorageById(id);

@@ -20,8 +20,6 @@ export async function storageCoffeeSave(coffee: CoffeeStorageProps) {
     coffeesStorage.push(coffee);
 
     await AsyncStorage.setItem(COFFEE_STORAGE, JSON.stringify(coffeesStorage));
-
-    return coffeesStorage;
 }
 
 export async function storageGetDataCoffees() {
