@@ -20,6 +20,7 @@ import {
   storageCoffeeSave,
   storageGetDataCoffees,
 } from "@storage/storageCoffee";
+import { Loading } from "@components/Loading";
 
 type RoutesParamsProps = {
   coffeeId: string;
@@ -32,13 +33,11 @@ export function Details() {
   const route = useRoute();
   const toast = useToast();
   const [coffeesInCar, setCoffeesInCar] = useState<CoffeeStorageProps[]>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigation = useNavigation<AppNavigationRoutesProps>();
 
   const { coffeeId } = route.params as RoutesParamsProps;
-
-  console.log(coffeeId);
-  console.log(coffee);
 
   function handleClick1() {
     setAmount("114ml");
@@ -113,12 +112,15 @@ export function Details() {
   useFocusEffect(
     useCallback(() => {
       async function fetchCoffeesStorage() {
+        setLoading(true);
         try {
           const coffeesStorage = await storageGetDataCoffees();
 
           setCoffeesInCar(coffeesStorage);
         } catch (err) {
           console.log(err);
+        } finally {
+          setLoading(false);
         }
       }
 
@@ -140,7 +142,11 @@ export function Details() {
             <ArrowLeft color="#ffffff" size="24" />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleOnClickCart}>
-            <Cart amount={Number(coffeesInCar?.length)} />
+            {!loading ? (
+              <Cart amount={Number(coffeesInCar?.length)} />
+            ) : (
+              <Loading />
+            )}
           </TouchableOpacity>
         </HStack>
         <View

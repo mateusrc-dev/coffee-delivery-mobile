@@ -5,10 +5,15 @@ import { useState, useEffect } from "react";
 type Props = {
   returnsCountNumber: (num: number) => void;
   withBorder?: boolean;
+  amount?: number;
 };
 
-export function InputNumber({ returnsCountNumber, withBorder = false }: Props) {
-  const [number, setNumber] = useState<number>(1);
+export function InputNumber({
+  returnsCountNumber,
+  withBorder = false,
+  amount = 1,
+}: Props) {
+  const [number, setNumber] = useState<number>(amount);
 
   useEffect(() => {
     returnsCountNumber(number);

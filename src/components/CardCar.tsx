@@ -7,6 +7,7 @@ type Props = {
   children: JSX.Element;
   coffeeName: string;
   coffeeAmount: string;
+  amountOfCoffee: number;
   price: number;
   id: string;
 };
@@ -16,6 +17,7 @@ export function CardCar({
   children,
   coffeeName,
   coffeeAmount,
+  amountOfCoffee,
   price,
   id,
 }: Props) {
@@ -55,6 +57,7 @@ export function CardCar({
               <InputNumber
                 returnsCountNumber={handleReturns}
                 withBorder={true}
+                amount={Number(amountOfCoffee)}
               />
               <ButtonIcon handleOnClick={() => handleOnClick(id)} svg="trash" />
             </HStack>

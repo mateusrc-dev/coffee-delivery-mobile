@@ -34,6 +34,7 @@ import {
   deleteCoffeeStorageById,
   storageGetDataCoffees,
 } from "@storage/storageCoffee";
+import { Loading } from "@components/Loading";
 
 export function Cart() {
   const [coffeesInCar, setCoffeesInCar] = useState<CoffeeStorageProps[]>([]);
@@ -108,13 +109,17 @@ export function Cart() {
 
   useEffect(() => {
     async function fetchCoffeesStorage() {
-      setLoading(false);
-      const coffeesStorage = await storageGetDataCoffees();
+      try {
+        setLoading(false);
+        const coffeesStorage = await storageGetDataCoffees();
 
-      setCoffeesInCar(coffeesStorage);
-      setLoading(true);
+        setCoffeesInCar(coffeesStorage);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(true);
+      }
     }
-
     fetchCoffeesStorage();
   }, []);
 
@@ -157,6 +162,7 @@ export function Cart() {
                 }
                 handleOnClick={handleOnClick}
                 price={item.price === undefined ? 1 : Number(item.price)}
+                amountOfCoffee={Number(item.amountOfCoffee)}
                 id={item.id}
               >
                 <Image
@@ -204,9 +210,12 @@ export function Cart() {
     </View>
   ) : (
     <Center flex="1">
-      <Text fontSize="title_md" fontFamily="heading" color="gray.300">
-        Carregando...
-      </Text>
+      <HStack space="2">
+        <Text fontSize="title_md" fontFamily="heading" color="gray.300">
+          Carregando...
+        </Text>
+        <Loading />
+      </HStack>
     </Center>
   );
 }

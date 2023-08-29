@@ -36,6 +36,7 @@ import {
   CoffeeStorageProps,
   storageGetDataCoffees,
 } from "@storage/storageCoffee";
+import { Loading } from "@components/Loading";
 
 export function Home() {
   const [coffees] = useState<CoffeesProps[]>(dataCoffees);
@@ -46,6 +47,7 @@ export function Home() {
   );
   const [coffeesInCar, setCoffeesInCar] = useState<CoffeeStorageProps[]>();
   const navigation = useNavigation<AppNavigationRoutesProps>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   function handleTagClick() {
     console.log("oie");
@@ -133,11 +135,13 @@ export function Home() {
     useCallback(() => {
       async function fetchCoffeesStorage() {
         try {
+          setLoading(true);
           const coffeesStorage = await storageGetDataCoffees();
-
           setCoffeesInCar(coffeesStorage);
         } catch (err) {
           console.log(err);
+        } finally {
+          setLoading(false);
         }
       }
 
@@ -170,7 +174,11 @@ export function Home() {
             </Text>
           </HStack>
           <TouchableOpacity onPress={handleOnClickCart}>
-            <Cart amount={Number(coffeesInCar?.length)} />
+            {loading ? (
+              <Loading />
+            ) : (
+              <Cart amount={Number(coffeesInCar?.length)} />
+            )}
           </TouchableOpacity>
         </HStack>
         <Text
