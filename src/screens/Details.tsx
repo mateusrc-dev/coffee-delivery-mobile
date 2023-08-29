@@ -8,10 +8,18 @@ import { InputNumber } from "@components/InputNumber";
 import { ButtonComponent } from "@components/Button";
 import { TouchableOpacity } from "react-native";
 import { AppNavigationRoutesProps } from "@routes/app.routes";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { CoffeeProps, dataCoffees } from "@data/dataOfCoffees";
-import { useState, useEffect } from "react";
-import { CoffeeStorageProps, storageCoffeeSave } from "@storage/storageCoffee";
+import { useState, useEffect, useCallback } from "react";
+import {
+  CoffeeStorageProps,
+  storageCoffeeSave,
+  storageGetDataCoffees,
+} from "@storage/storageCoffee";
 
 type RoutesParamsProps = {
   coffeeId: string;
@@ -23,6 +31,7 @@ export function Details() {
   const [amountCoffee, setAmountCoffee] = useState<number>(0);
   const route = useRoute();
   const toast = useToast();
+  const [coffeesInCar, setCoffeesInCar] = useState<CoffeeStorageProps[]>();
 
   const navigation = useNavigation<AppNavigationRoutesProps>();
 
@@ -53,7 +62,7 @@ export function Details() {
     return randomId.toString();
   }
 
-  function handleOnClickButton() {
+  async function handleOnClickButton() {
     const newCoffee: CoffeeStorageProps = {
       id: generateRandomId(),
       coffeeImage: coffee?.coffeeImage,
@@ -68,7 +77,7 @@ export function Details() {
     storageCoffeeSave(newCoffee);
 
     toast.show({
-      title: "Café colocado no carrinho com sucesso!",
+      title: "Café inserido no carrinho com sucesso!",
       placement: "top",
       bgColor: "red.50",
     });
@@ -101,6 +110,22 @@ export function Details() {
     }
   }, [coffeeId]);
 
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchCoffeesStorage() {
+        try {
+          const coffeesStorage = await storageGetDataCoffees();
+
+          setCoffeesInCar(coffeesStorage);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      fetchCoffeesStorage();
+    }, [])
+  );
+
   return (
     <View bgColor="gray.800" flex={1}>
       <StatusBar
@@ -115,7 +140,7 @@ export function Details() {
             <ArrowLeft color="#ffffff" size="24" />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleOnClickCart}>
-            <Cart amount={3} />
+            <Cart amount={coffeesInCar?.length} />
           </TouchableOpacity>
         </HStack>
         <View

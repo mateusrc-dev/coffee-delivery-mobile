@@ -46,9 +46,6 @@ export function Home() {
   );
   const [coffeesInCar, setCoffeesInCar] = useState<CoffeeStorageProps[]>();
   const navigation = useNavigation<AppNavigationRoutesProps>();
-  const [refresh, setRefresh] = useState(false);
-
-  console.log(text);
 
   function handleTagClick() {
     console.log("oie");
@@ -145,13 +142,6 @@ export function Home() {
       }
 
       fetchCoffeesStorage();
-    }, [refresh])
-  );
-
-  useFocusEffect(
-    useCallback(() => {
-      setRefresh(true);
-      setRefresh(false);
     }, [])
   );
 

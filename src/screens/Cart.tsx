@@ -1,5 +1,6 @@
 import { CardCar } from "@components/CardCar";
 import {
+  Center,
   FlatList,
   HStack,
   Image,
@@ -173,12 +174,14 @@ export function Cart() {
             )}
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={() => (
-              <HStack alignItems="center" space="2">
-                <Warning color="#C44117" size={30} />
-                <Text color="red.50" fontFamily="heading" fontSize="title_md">
-                  Não há nenhum item no carrinho!
-                </Text>
-              </HStack>
+              <Center flex="1">
+                <HStack alignItems="center" space="2">
+                  <Warning color="#C44117" size={30} />
+                  <Text color="red.50" fontFamily="heading" fontSize="title_md">
+                    Não há nenhum item no carrinho!
+                  </Text>
+                </HStack>
+              </Center>
             )}
           />
         )}
@@ -200,8 +203,10 @@ export function Cart() {
       </View>
     </View>
   ) : (
-    <View>
-      <Text>Carregando...</Text>
-    </View>
+    <Center flex="1">
+      <Text fontSize="title_md" fontFamily="heading" color="gray.300">
+        Carregando...
+      </Text>
+    </Center>
   );
 }
