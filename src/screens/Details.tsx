@@ -140,7 +140,7 @@ export function Details() {
             <ArrowLeft color="#ffffff" size="24" />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleOnClickCart}>
-            <Cart amount={coffeesInCar?.length} />
+            <Cart amount={Number(coffeesInCar?.length)} />
           </TouchableOpacity>
         </HStack>
         <View
