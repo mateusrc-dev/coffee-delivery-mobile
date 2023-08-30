@@ -26,7 +26,7 @@ import CoffeeImage10 from "@assets/Coffee10.png";
 import CoffeeImage11 from "@assets/Coffee11.png";
 import CoffeeImage12 from "@assets/Coffee12.png";
 import { Tag } from "@components/Tag";
-import { TouchableOpacity } from "react-native";
+import { Dimensions, TouchableOpacity } from "react-native";
 import { AppNavigationRoutesProps } from "@routes/app.routes";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { Cart } from "@components/Cart";
@@ -37,6 +37,15 @@ import {
   storageGetDataCoffees,
 } from "@storage/storageCoffee";
 import { Loading } from "@components/Loading";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+
+const SCREEN_WIDTH = Dimensions.get("screen").width;
+// const SCREEN_HEIGHT = Dimensions.get("screen").height;
 
 export function Home() {
   const [coffees] = useState<CoffeesProps[]>(dataCoffees);
@@ -48,6 +57,54 @@ export function Home() {
   const [coffeesInCar, setCoffeesInCar] = useState<CoffeeStorageProps[]>();
   const navigation = useNavigation<AppNavigationRoutesProps>();
   const [loading, setLoading] = useState<boolean>(false);
+
+  const translate1 = useSharedValue(-342);
+  const translate2 = useSharedValue(50);
+  const translate3 = useSharedValue(SCREEN_WIDTH);
+  const translate4 = useSharedValue(300);
+  const opacity1 = useSharedValue(0);
+
+  const animatedContainerStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translate1.value }],
+    };
+  });
+
+  const animatedContainerStyle2 = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translate2.value }],
+      opacity: opacity1.value,
+    };
+  });
+
+  const animatedContainerStyle3 = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translate3.value }],
+    };
+  });
+
+  const animatedContainerStyle4 = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translate4.value }],
+    };
+  });
+
+  function handleChangeTranslate() {
+    translate1.value = withTiming(0, { easing: Easing.ease, duration: 1000 });
+  }
+
+  function handleChangeTranslate2() {
+    translate2.value = withTiming(0, { easing: Easing.ease, duration: 1000 });
+    opacity1.value = withTiming(1, { easing: Easing.ease, duration: 1000 });
+  }
+
+  function handleChangeTranslate3() {
+    translate3.value = withTiming(0, { easing: Easing.ease, duration: 1000 });
+  }
+
+  function handleChangeTranslate4() {
+    translate4.value = withTiming(0, { easing: Easing.ease, duration: 1000 });
+  }
 
   function handleTagClick() {
     console.log("oie");
@@ -131,6 +188,18 @@ export function Home() {
     setCoffeesFiltered(coffeesArray);
   }, []);
 
+  useEffect(() => {
+    handleChangeTranslate();
+    handleChangeTranslate2();
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      handleChangeTranslate3();
+      handleChangeTranslate4();
+    }, 1000);
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
       async function fetchCoffeesStorage() {
@@ -160,7 +229,18 @@ export function Home() {
         translucent
       />
 
-      <View bgColor="gray.50" px={8} h={342}>
+      <Animated.View
+        style={[
+          animatedContainerStyle,
+          { backgroundColor: "#272221", height: 342 },
+        ]}
+      />
+      <Animated.View
+        style={[
+          animatedContainerStyle2,
+          { position: "absolute", paddingLeft: 32 },
+        ]}
+      >
         <HStack
           mt="10"
           mb="12"
@@ -204,46 +284,59 @@ export function Home() {
             right={-20}
           />
         </View>
-      </View>
+      </Animated.View>
       <View bgColor="gray.800">
-        <FlatList
-          mt="-16"
-          minWidth="full"
-          horizontal
-          data={text.length === 0 ? coffeesFiltered : coffeesFilteredTwo}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Pressable onPress={() => handleOnClickCoffeeItem(item.id)} mr="8">
-              <CoffeeItem
-                coffeeName={item.coffeeName}
-                coffeeType={item.coffeeType}
-                description={item.description}
-                mode="vertical"
-                price={item.price}
+        <Animated.View style={animatedContainerStyle3}>
+          <FlatList
+            mt="-16"
+            minWidth="full"
+            horizontal
+            data={text.length === 0 ? coffeesFiltered : coffeesFilteredTwo}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <Pressable
+                onPress={() => handleOnClickCoffeeItem(item.id)}
+                mr="8"
               >
-                <Image
-                  mt="-8"
-                  w="120"
-                  h="120"
-                  source={handleImage(item.coffeeImage)}
-                  alt="imagem do cafe"
-                />
-              </CoffeeItem>
-            </Pressable>
-          )}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingVertical: 30, paddingHorizontal: 32 }}
-          ListEmptyComponent={() => (
-            <HStack alignItems="center" space="2">
-              <Warning color="#C44117" size={30} />
-              <Text color="red.50" fontFamily="heading" fontSize="title_md">
-                Não foi encontrado resultados!
-              </Text>
-            </HStack>
-          )}
-        />
+                <CoffeeItem
+                  coffeeName={item.coffeeName}
+                  coffeeType={item.coffeeType}
+                  description={item.description}
+                  mode="vertical"
+                  price={item.price}
+                >
+                  <Image
+                    mt="-8"
+                    w="120"
+                    h="120"
+                    source={handleImage(item.coffeeImage)}
+                    alt="imagem do cafe"
+                  />
+                </CoffeeItem>
+              </Pressable>
+            )}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingVertical: 30,
+              paddingHorizontal: 32,
+            }}
+            ListEmptyComponent={() => (
+              <HStack alignItems="center" space="2">
+                <Warning color="#C44117" size={30} />
+                <Text color="red.50" fontFamily="heading" fontSize="title_md">
+                  Não foi encontrado resultados!
+                </Text>
+              </HStack>
+            )}
+          />
+        </Animated.View>
 
-        <View bgColor="gray.800" px="8">
+        <Animated.View
+          style={[
+            animatedContainerStyle4,
+            { backgroundColor: "#FAFAFA", paddingHorizontal: 32 },
+          ]}
+        >
           <Text
             color="gray.200"
             fontFamily="Baloo2_700Bold"
@@ -252,7 +345,7 @@ export function Home() {
           >
             Nossos cafés
           </Text>
-          <HStack mb="8" space="2">
+          <HStack space="2">
             <Tag handleOnClick={handleTagClick} text="TRADICIONAIS" />
             <Tag handleOnClick={handleTagClick} text="DOCES" />
             <Tag handleOnClick={handleTagClick} text="ESPECIAIS" />
@@ -299,7 +392,7 @@ export function Home() {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 10 }}
           />
-        </View>
+        </Animated.View>
       </View>
     </ScrollView>
   );
