@@ -32,10 +32,7 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { Cart } from "@components/Cart";
 import { useState, useEffect, useCallback } from "react";
 import { CoffeeProps, CoffeesProps, dataCoffees } from "@data/dataOfCoffees";
-import {
-  CoffeeStorageProps,
-  storageGetDataCoffees,
-} from "@storage/storageCoffee";
+import { storageGetDataCoffees } from "@storage/storageCoffee";
 import { Loading } from "@components/Loading";
 import Animated, {
   Easing,
@@ -43,18 +40,19 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { coffeesData } from "@data/coffees";
 
 const SCREEN_WIDTH = Dimensions.get("screen").width;
 // const SCREEN_HEIGHT = Dimensions.get("screen").height;
 
 export function Home() {
   const [coffees] = useState<CoffeesProps[]>(dataCoffees);
-  const [coffeesFiltered, setCoffeesFiltered] = useState<CoffeeProps[]>([]);
+  const [coffeesFiltered] = useState<CoffeeProps[]>(coffeesData);
   const [text, setText] = useState<string>("");
   const [coffeesFilteredTwo, setCoffeesFilteredTwo] = useState<CoffeeProps[]>(
     []
   );
-  const [coffeesInCar, setCoffeesInCar] = useState<CoffeeStorageProps[]>();
+  const [coffeesInCar, setCoffeesInCar] = useState<number>(0);
   const navigation = useNavigation<AppNavigationRoutesProps>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -179,16 +177,6 @@ export function Home() {
   }, [text]);
 
   useEffect(() => {
-    let coffeesArray = [];
-    for (var i = 0; i < coffees.length; i++) {
-      for (var a = 0; a < coffees[i].data.length; a++) {
-        coffeesArray.push(coffees[i].data[a]);
-      }
-    }
-    setCoffeesFiltered(coffeesArray);
-  }, []);
-
-  useEffect(() => {
     handleChangeTranslate();
     handleChangeTranslate2();
   }, []);
@@ -206,7 +194,7 @@ export function Home() {
         try {
           setLoading(true);
           const coffeesStorage = await storageGetDataCoffees();
-          setCoffeesInCar(coffeesStorage);
+          setCoffeesInCar(coffeesStorage.length);
         } catch (err) {
           console.log(err);
         } finally {
@@ -254,11 +242,7 @@ export function Home() {
             </Text>
           </HStack>
           <TouchableOpacity onPress={handleOnClickCart}>
-            {loading ? (
-              <Loading />
-            ) : (
-              <Cart amount={Number(coffeesInCar?.length)} />
-            )}
+            {loading ? <Loading /> : <Cart amount={Number(coffeesInCar)} />}
           </TouchableOpacity>
         </HStack>
         <Text

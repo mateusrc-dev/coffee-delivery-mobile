@@ -22,7 +22,9 @@ const { Navigator, Screen } = createNativeStackNavigator<RoutesProps>();
 
 export function RoutesApp() {
   return (
-    <Navigator screenOptions={{ headerShown: false }}>
+    <Navigator
+      screenOptions={{ headerShown: false, animation: "slide_from_right" }}
+    >
       <Screen name="coffeeDelivery" component={CoffeeDelivery} />
       <Screen name="home" component={Home} />
       <Screen name="details" component={Details} />
