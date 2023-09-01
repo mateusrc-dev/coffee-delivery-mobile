@@ -4,11 +4,10 @@ import {
   FlatList,
   HStack,
   Image,
-  ScrollView,
   StatusBar,
   Text,
-  VStack,
   View,
+  Pressable,
 } from "native-base";
 import CoffeeImage1 from "@assets/Coffee1.png";
 import CoffeeImage2 from "@assets/Coffee2.png";
@@ -22,12 +21,12 @@ import CoffeeImage9 from "@assets/Coffee9.png";
 import CoffeeImage10 from "@assets/Coffee10.png";
 import CoffeeImage11 from "@assets/Coffee11.png";
 import CoffeeImage12 from "@assets/Coffee12.png";
-import { ArrowLeft, Warning } from "phosphor-react-native";
+import { ArrowLeft, Trash, Warning } from "phosphor-react-native";
 import { ButtonComponent } from "@components/Button";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Alert } from "react-native";
 import { AppNavigationRoutesProps } from "@routes/app.routes";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   CoffeeStorageProps,
   deleteAllStorageCoffees,
@@ -35,17 +34,33 @@ import {
   storageGetDataCoffees,
 } from "@storage/storageCoffee";
 import { Loading } from "@components/Loading";
+import { Swipeable } from "react-native-gesture-handler";
+import { THEME } from "@theme/index";
+import { styles } from "@theme/styles";
 
 export function Cart() {
   const [coffeesInCar, setCoffeesInCar] = useState<CoffeeStorageProps[]>([]);
   const navigation = useNavigation<AppNavigationRoutesProps>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  async function handleOnClick(id: string) {
+  const swipeableRefs = useRef<Swipeable[]>([]);
+
+  async function remove(id: string) {
     setLoading(false);
     const coffeesWithoutCoffeeDeleted = await deleteCoffeeStorageById(id);
     setCoffeesInCar(coffeesWithoutCoffeeDeleted);
     setLoading(true);
+  }
+
+  async function handleOnClick(id: string, index: number) {
+    swipeableRefs.current?.[index].close();
+    Alert.alert("Remover", "Deseja remover esse registro?", [
+      {
+        text: "Sim",
+        onPress: () => remove(id),
+      },
+      { text: "Não", style: "cancel" },
+    ]);
   }
 
   function handleOnClickButton() {
@@ -152,29 +167,48 @@ export function Cart() {
             minWidth="full"
             data={coffeesInCar}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <CardCar
-                coffeeAmount={item.amount === undefined ? "" : item.amount}
-                coffeeName={
-                  item.coffeeName === undefined ? "" : item.coffeeName
-                }
-                handleOnClick={handleOnClick}
-                price={item.price === undefined ? 1 : Number(item.price)}
-                amountOfCoffee={Number(item.amountOfCoffee)}
-                id={item.id}
-              >
-                <Image
-                  mt="-8"
-                  w="16"
-                  h="16"
-                  source={
-                    item.coffeeImage === undefined
-                      ? ""
-                      : handleImage(item.coffeeImage)
+            renderItem={({ item, index }) => (
+              <Swipeable
+                ref={(ref) => {
+                  if (ref) {
+                    swipeableRefs.current.push(ref);
                   }
-                  alt="imagem do cafe"
-                />
-              </CardCar>
+                }}
+                overshootLeft={false}
+                containerStyle={styles.swipeableContainer}
+                renderLeftActions={() => (
+                  <Pressable
+                    onPress={() => handleOnClick(item.id, index)}
+                    style={styles.swipeableRemove}
+                  >
+                    <Trash size={32} color={THEME.colors.red[50]} />
+                  </Pressable>
+                )}
+              >
+                <CardCar
+                  index={index}
+                  coffeeAmount={item.amount === undefined ? "" : item.amount}
+                  coffeeName={
+                    item.coffeeName === undefined ? "" : item.coffeeName
+                  }
+                  handleOnClick={handleOnClick}
+                  price={item.price === undefined ? 1 : Number(item.price)}
+                  amountOfCoffee={Number(item.amountOfCoffee)}
+                  id={item.id}
+                >
+                  <Image
+                    mt="-8"
+                    w="16"
+                    h="16"
+                    source={
+                      item.coffeeImage === undefined
+                        ? ""
+                        : handleImage(item.coffeeImage)
+                    }
+                    alt="imagem do cafe"
+                  />
+                </CardCar>
+              </Swipeable>
             )}
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={() => (

@@ -3,13 +3,14 @@ import { InputNumber } from "./InputNumber";
 import { ButtonIcon } from "./ButtonIcon";
 
 type Props = {
-  handleOnClick: (id: string) => void;
+  handleOnClick: (id: string, index: number) => void;
   children: JSX.Element;
   coffeeName: string;
   coffeeAmount: string;
   amountOfCoffee: number;
   price: number;
   id: string;
+  index: number;
 };
 
 export function CardCar({
@@ -20,6 +21,7 @@ export function CardCar({
   amountOfCoffee,
   price,
   id,
+  index,
 }: Props) {
   function handleReturns(number: number) {
     console.log(number);
@@ -59,7 +61,10 @@ export function CardCar({
                 withBorder={true}
                 amount={Number(amountOfCoffee)}
               />
-              <ButtonIcon handleOnClick={() => handleOnClick(id)} svg="trash" />
+              <ButtonIcon
+                handleOnClick={() => handleOnClick(id, index)}
+                svg="trash"
+              />
             </HStack>
           </VStack>
           <Text
