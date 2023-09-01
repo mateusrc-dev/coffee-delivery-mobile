@@ -176,13 +176,13 @@ export function Cart() {
                 }}
                 overshootLeft={false}
                 containerStyle={styles.swipeableContainer}
+                leftThreshold={10}
+                onSwipeableOpen={() => handleOnClick(item.id, index)}
+                renderRightActions={() => null}
                 renderLeftActions={() => (
-                  <Pressable
-                    onPress={() => handleOnClick(item.id, index)}
-                    style={styles.swipeableRemove}
-                  >
+                  <View style={styles.swipeableRemove}>
                     <Trash size={32} color={THEME.colors.red[50]} />
-                  </Pressable>
+                  </View>
                 )}
               >
                 <CardCar
