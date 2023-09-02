@@ -1,5 +1,6 @@
 import { InputComponent } from "@components/InputComponent";
 import {
+  Center,
   FlatList,
   HStack,
   Image,
@@ -40,6 +41,7 @@ import Animated, {
   useSharedValue,
   withTiming,
   interpolateColor,
+  interpolate,
 } from "react-native-reanimated";
 import { coffeesData } from "@data/coffees";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -72,6 +74,7 @@ export function Home() {
   const containerPosition = useSharedValue(0);
 
   const onPan = Gesture.Pan()
+    .activateAfterLongPress(200)
     .onUpdate((event) => {
       console.log(event.translationY);
       const moveUp = event.translationY < 0 && event.translationY > -500;
@@ -98,6 +101,12 @@ export function Home() {
     };
   });
 
+  const marginTopAnimation = useAnimatedStyle(() => {
+    return {
+      marginTop: interpolate(containerPosition.value, [0, -500], [0, -20]),
+    };
+  });
+
   const backgroundAnimation = useAnimatedStyle(() => {
     return {
       backgroundColor: interpolateColor(
@@ -120,6 +129,17 @@ export function Home() {
         containerPosition.value,
         [0, -500],
         ["transparent", "#D7D5D5"]
+      ),
+    };
+  });
+
+  const borderTopAnimation = useAnimatedStyle(() => {
+    return {
+      borderTopWidth: 1,
+      borderTopColor: interpolateColor(
+        containerPosition.value,
+        [0, -500],
+        ["#574F4D", "transparent"]
       ),
     };
   });
@@ -275,20 +295,26 @@ export function Home() {
     }, [])
   );
 
-  return (
+  return !loading ? (
     <View>
       <Animated.View
-        style={[animatedContainerStyle2, backgroundAnimation, borderAnimation]}
+        style={[
+          animatedContainerStyle2,
+          backgroundAnimation,
+          borderAnimation,
+          marginTopAnimation,
+          { backgroundColor: "#272221" },
+        ]}
       >
-        <HStack
-          mt="10"
+        <HStackAnimated
+          marginTop="10"
           mb="2"
           justifyContent="space-between"
           alignItems="center"
-          // borderBottomWidth={1}
-          // borderBottomColor={"gray.50"}
+          pt={4}
           pb={2}
           px={8}
+          style={borderTopAnimation}
         >
           <HStack space={2} alignItems="center">
             <MapPin weight="fill" color="#8047F8" size={20} />
@@ -304,7 +330,7 @@ export function Home() {
           <TouchableOpacity onPress={handleOnClickCart}>
             {loading ? <Loading /> : <Cart amount={Number(coffeesInCar)} />}
           </TouchableOpacity>
-        </HStack>
+        </HStackAnimated>
       </Animated.View>
 
       <Animated.ScrollView
@@ -325,7 +351,7 @@ export function Home() {
             animatedContainerStyle,
             backgroundAnimation,
             dragStyles,
-            { height: 242 },
+            { height: 242, backgroundColor: "#272221" },
           ]}
         />
         <Animated.View
@@ -409,7 +435,7 @@ export function Home() {
               style={[
                 animatedContainerStyle4,
                 dragStyles,
-                { backgroundColor: "#FAFAFA", paddingHorizontal: 32 },
+                { backgroundColor: "#FAFAFA" },
               ]}
             >
               <Text
@@ -417,12 +443,16 @@ export function Home() {
                 fontFamily="Baloo2_700Bold"
                 fontSize="text_md"
                 mb="3"
+                px="8"
               >
                 Nossos cafés
               </Text>
               <HStackAnimated
                 space="2"
-                style={[borderAnimation, { paddingBottom: 12 }]}
+                style={[
+                  borderAnimation,
+                  { paddingBottom: 12, paddingHorizontal: 32 },
+                ]}
               >
                 <Tag
                   returnsText={handleReturnsTag}
@@ -445,6 +475,7 @@ export function Home() {
                 minWidth="full"
                 sections={coffees}
                 data={coffees}
+                paddingX={8}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                   <Pressable
@@ -487,5 +518,14 @@ export function Home() {
         </View>
       </Animated.ScrollView>
     </View>
+  ) : (
+    <Center backgroundColor={"gray.800"} flex="1">
+      <HStack space="2">
+        <Text fontFamily={"heading"} color="gray.100" fontSize={"title_lg"}>
+          Carregando...
+        </Text>
+        <Loading />
+      </HStack>
+    </Center>
   );
 }
