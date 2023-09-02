@@ -1,19 +1,18 @@
 import { Button, Text } from "native-base";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Props = {
-  handleOnClick: (state: boolean) => void;
+  returnsText: (text: string) => void;
   text: string;
+  isSelectedTag: boolean;
 };
 
-export function Tag({ handleOnClick, text }: Props) {
-  const [isSelected, setIsSelected] = useState<boolean>(false);
+export function Tag({ text, returnsText, isSelectedTag }: Props) {
+  function handleOnClickButton() {
+    returnsText(text);
+  }
 
-  useEffect(() => {
-    handleOnClick(isSelected);
-  }, [isSelected]);
-
-  if (isSelected) {
+  if (isSelectedTag) {
     return (
       <Button
         p="0"
@@ -23,7 +22,7 @@ export function Tag({ handleOnClick, text }: Props) {
         borderWidth={1}
         borderColor="purple.50"
         rounded={"full"}
-        onPress={() => setIsSelected((prevState) => !prevState)}
+        onPress={handleOnClickButton}
       >
         <Text fontSize="10" color="gray.900" fontFamily={"heading"}>
           {text}
@@ -40,7 +39,7 @@ export function Tag({ handleOnClick, text }: Props) {
         borderWidth={1}
         borderColor="purple.50"
         rounded={"full"}
-        onPress={() => setIsSelected((prevState) => !prevState)}
+        onPress={handleOnClickButton}
       >
         <Text fontSize="10" color="purple.100" fontFamily={"heading"}>
           {text}

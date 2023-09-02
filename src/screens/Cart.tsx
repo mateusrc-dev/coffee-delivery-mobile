@@ -37,6 +37,11 @@ import { Loading } from "@components/Loading";
 import { Swipeable } from "react-native-gesture-handler";
 import { THEME } from "@theme/index";
 import { styles } from "@theme/styles";
+import Animated, {
+  Layout,
+  SlideInRight,
+  SlideOutRight,
+} from "react-native-reanimated";
 
 export function Cart() {
   const [coffeesInCar, setCoffeesInCar] = useState<CoffeeStorageProps[]>([]);
@@ -161,13 +166,19 @@ export function Cart() {
           </Text>
           <ArrowLeft color="#FAFAFA" size="24" />
         </HStack>
-        {coffeesInCar.length !== 0 && (
-          <FlatList
-            flex="1"
-            minWidth="full"
-            data={coffeesInCar}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => (
+
+        <FlatList
+          flex="1"
+          minWidth="full"
+          data={coffeesInCar}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item, index }) => (
+            <Animated.View
+              layout={Layout.springify()}
+              entering={SlideInRight}
+              exiting={SlideOutRight}
+              key={item.id}
+            >
               <Swipeable
                 ref={(ref) => {
                   if (ref) {
@@ -209,20 +220,20 @@ export function Cart() {
                   />
                 </CardCar>
               </Swipeable>
-            )}
-            showsHorizontalScrollIndicator={false}
-            ListEmptyComponent={() => (
-              <Center flex="1">
-                <HStack alignItems="center" space="2">
-                  <Warning color="#C44117" size={30} />
-                  <Text color="red.50" fontFamily="heading" fontSize="title_md">
-                    Não há nenhum item no carrinho!
-                  </Text>
-                </HStack>
-              </Center>
-            )}
-          />
-        )}
+            </Animated.View>
+          )}
+          showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={() => (
+            <Center flex="1">
+              <HStack alignItems="center" space="2">
+                <Warning color="#C44117" size={30} />
+                <Text color="red.50" fontFamily="heading" fontSize="title_md">
+                  Não há nenhum item no carrinho!
+                </Text>
+              </HStack>
+            </Center>
+          )}
+        />
       </View>
       <View shadow={10} bgColor="gray.900" px="8" py="26">
         <HStack alignItems="center" justifyContent="space-between" mb="5">
