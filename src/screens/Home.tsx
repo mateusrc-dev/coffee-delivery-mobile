@@ -36,19 +36,14 @@ import { storageGetDataCoffees } from "@storage/storageCoffee";
 import { Loading } from "@components/Loading";
 import Animated, {
   Easing,
-  useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-  interpolateColor,
-  interpolate,
 } from "react-native-reanimated";
 import { coffeesData } from "@data/coffees";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 const HStackAnimated = Animated.createAnimatedComponent(HStack);
 const SCREEN_WIDTH = Dimensions.get("screen").width;
-// const SCREEN_HEIGHT = Dimensions.get("screen").height;
 
 export function Home() {
   const [coffees] = useState<CoffeesProps[]>(dataCoffees);
@@ -61,95 +56,12 @@ export function Home() {
   const navigation = useNavigation<AppNavigationRoutesProps>();
   const [loading, setLoading] = useState<boolean>(false);
   const [tagSelected, setTagSelected] = useState<string>("TRADICIONAIS");
-  // const [scrollYValue, setScrollYValue] = useState<number>(0);
-
-  console.log(tagSelected);
 
   const translate1 = useSharedValue(-342);
   const translate2 = useSharedValue(50);
   const translate3 = useSharedValue(SCREEN_WIDTH);
   const translate4 = useSharedValue(300);
   const opacity1 = useSharedValue(0);
-  const scrollY = useSharedValue(0);
-  const containerPosition = useSharedValue(0);
-
-  const onPan = Gesture.Pan()
-    .activateAfterLongPress(200)
-    .onUpdate((event) => {
-      console.log(event.translationY);
-      const moveUp = event.translationY < 0 && event.translationY > -500;
-      if (moveUp) {
-        containerPosition.value = event.translationY;
-      }
-      const moveDown = event.translationY > -500 && event.translationY < 0;
-      if (moveDown) {
-        containerPosition.value = event.translationY;
-      }
-    })
-    .onEnd((event) => {
-      if (event.translationY > -400) {
-        containerPosition.value = withTiming(-500);
-      }
-      if (event.translationY > -200) {
-        containerPosition.value = withTiming(0);
-      }
-    });
-
-  const dragStyles = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: containerPosition.value }],
-    };
-  });
-
-  const marginTopAnimation = useAnimatedStyle(() => {
-    return {
-      marginTop: interpolate(containerPosition.value, [0, -500], [0, -20]),
-    };
-  });
-
-  const backgroundAnimation = useAnimatedStyle(() => {
-    return {
-      backgroundColor: interpolateColor(
-        containerPosition.value,
-        [0, -500],
-        ["#272221", "#FAFAFA"]
-      ),
-      color: interpolateColor(
-        containerPosition.value,
-        [0, -500],
-        ["#FAFAFA", "#272221"]
-      ),
-    };
-  });
-
-  const borderAnimation = useAnimatedStyle(() => {
-    return {
-      borderBottomWidth: 1,
-      borderBottomColor: interpolateColor(
-        containerPosition.value,
-        [0, -500],
-        ["transparent", "#D7D5D5"]
-      ),
-    };
-  });
-
-  const borderTopAnimation = useAnimatedStyle(() => {
-    return {
-      borderTopWidth: 1,
-      borderTopColor: interpolateColor(
-        containerPosition.value,
-        [0, -500],
-        ["#574F4D", "transparent"]
-      ),
-    };
-  });
-
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      console.log(event);
-      scrollY.value = event.contentOffset.y;
-    },
-  });
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     return {
@@ -297,48 +209,10 @@ export function Home() {
 
   return !loading ? (
     <View>
-      <Animated.View
-        style={[
-          animatedContainerStyle2,
-          backgroundAnimation,
-          borderAnimation,
-          marginTopAnimation,
-          { backgroundColor: "#272221" },
-        ]}
-      >
-        <HStackAnimated
-          marginTop="10"
-          mb="2"
-          justifyContent="space-between"
-          alignItems="center"
-          pt={4}
-          pb={2}
-          px={8}
-          style={borderTopAnimation}
-        >
-          <HStack space={2} alignItems="center">
-            <MapPin weight="fill" color="#8047F8" size={20} />
-            <Animated.Text
-              style={[
-                backgroundAnimation,
-                { fontSize: 16, fontFamily: "body" },
-              ]}
-            >
-              Porto alegre, RS
-            </Animated.Text>
-          </HStack>
-          <TouchableOpacity onPress={handleOnClickCart}>
-            {loading ? <Loading /> : <Cart amount={Number(coffeesInCar)} />}
-          </TouchableOpacity>
-        </HStackAnimated>
-      </Animated.View>
-
       <Animated.ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
-        onScroll={scrollHandler}
         scrollEventThrottle={16}
-        scrollEnabled={false}
       >
         <StatusBar
           barStyle="light-content"
@@ -349,18 +223,43 @@ export function Home() {
         <Animated.View
           style={[
             animatedContainerStyle,
-            backgroundAnimation,
-            dragStyles,
-            { height: 242, backgroundColor: "#272221" },
+
+            { height: 342, backgroundColor: "#272221" },
           ]}
         />
         <Animated.View
           style={[
             animatedContainerStyle2,
-            dragStyles,
+
             { position: "absolute", paddingLeft: 32 },
           ]}
         >
+          <Animated.View
+            style={[animatedContainerStyle2, { backgroundColor: "#272221" }]}
+          >
+            <HStackAnimated
+              marginTop="10"
+              mb="2"
+              justifyContent="space-between"
+              alignItems="center"
+              pt={4}
+              pb={2}
+            >
+              <HStack space={2} alignItems="center">
+                <MapPin weight="fill" color="#8047F8" size={20} />
+                <Text
+                  style={[
+                    { fontSize: 16, fontFamily: "body", color: "#FAFAFA" },
+                  ]}
+                >
+                  Porto alegre, RS
+                </Text>
+              </HStack>
+              <TouchableOpacity onPress={handleOnClickCart}>
+                {loading ? <Loading /> : <Cart amount={Number(coffeesInCar)} />}
+              </TouchableOpacity>
+            </HStackAnimated>
+          </Animated.View>
           <Text
             color="gray.900"
             fontFamily="heading_baloo"
@@ -386,7 +285,7 @@ export function Home() {
           </View>
         </Animated.View>
         <View bgColor="gray.800">
-          <Animated.View style={[animatedContainerStyle3, dragStyles]}>
+          <Animated.View style={[animatedContainerStyle3]}>
             <FlatList
               mt="-16"
               minWidth="full"
@@ -430,91 +329,83 @@ export function Home() {
               )}
             />
           </Animated.View>
-          <GestureDetector gesture={onPan}>
-            <Animated.View
-              style={[
-                animatedContainerStyle4,
-                dragStyles,
-                { backgroundColor: "#FAFAFA" },
-              ]}
-            >
-              <Text
-                color="gray.200"
-                fontFamily="Baloo2_700Bold"
-                fontSize="text_md"
-                mb="3"
-                px="8"
-              >
-                Nossos cafés
-              </Text>
-              <HStackAnimated
-                space="2"
-                style={[
-                  borderAnimation,
-                  { paddingBottom: 12, paddingHorizontal: 32 },
-                ]}
-              >
-                <Tag
-                  returnsText={handleReturnsTag}
-                  text="TRADICIONAIS"
-                  isSelectedTag={tagSelected === "TRADICIONAIS"}
-                />
-                <Tag
-                  returnsText={handleReturnsTag}
-                  text="DOCES"
-                  isSelectedTag={tagSelected === "DOCES"}
-                />
-                <Tag
-                  returnsText={handleReturnsTag}
-                  text="ESPECIAIS"
-                  isSelectedTag={tagSelected === "ESPECIAIS"}
-                />
-              </HStackAnimated>
 
-              <SectionList
-                minWidth="full"
-                sections={coffees}
-                data={coffees}
-                paddingX={8}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                  <Pressable
-                    onPress={() => handleOnClickCoffeeItem(item.id)}
-                    mb="8"
-                  >
-                    <CoffeeItem
-                      coffeeName={item.coffeeName}
-                      coffeeType={item.coffeeType}
-                      description={item.description}
-                      mode="horizontal"
-                      price={item.price}
-                    >
-                      <Image
-                        mt="-8"
-                        w="120"
-                        h="120"
-                        source={handleImage(item.coffeeImage)}
-                        alt="imagem do cafe"
-                      />
-                    </CoffeeItem>
-                  </Pressable>
-                )}
-                renderSectionHeader={({ section: { title } }) => (
-                  <Text
-                    color="gray.300"
-                    fontFamily="Baloo2_700Bold"
-                    fontSize="text_sm"
-                    mb="8"
-                    mt="8"
-                  >
-                    {title}
-                  </Text>
-                )}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingHorizontal: 10 }}
+          <Animated.View
+            style={[animatedContainerStyle4, { backgroundColor: "#FAFAFA" }]}
+          >
+            <Text
+              color="gray.200"
+              fontFamily="Baloo2_700Bold"
+              fontSize="text_md"
+              mb="3"
+              px="8"
+            >
+              Nossos cafés
+            </Text>
+            <HStackAnimated
+              space="2"
+              style={[{ paddingBottom: 12, paddingHorizontal: 32 }]}
+            >
+              <Tag
+                returnsText={handleReturnsTag}
+                text="TRADICIONAIS"
+                isSelectedTag={tagSelected === "TRADICIONAIS"}
               />
-            </Animated.View>
-          </GestureDetector>
+              <Tag
+                returnsText={handleReturnsTag}
+                text="DOCES"
+                isSelectedTag={tagSelected === "DOCES"}
+              />
+              <Tag
+                returnsText={handleReturnsTag}
+                text="ESPECIAIS"
+                isSelectedTag={tagSelected === "ESPECIAIS"}
+              />
+            </HStackAnimated>
+
+            <SectionList
+              minWidth="full"
+              sections={coffees}
+              data={coffees}
+              paddingX={8}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <Pressable
+                  onPress={() => handleOnClickCoffeeItem(item.id)}
+                  mb="8"
+                >
+                  <CoffeeItem
+                    coffeeName={item.coffeeName}
+                    coffeeType={item.coffeeType}
+                    description={item.description}
+                    mode="horizontal"
+                    price={item.price}
+                  >
+                    <Image
+                      mt="-8"
+                      w="120"
+                      h="120"
+                      source={handleImage(item.coffeeImage)}
+                      alt="imagem do cafe"
+                    />
+                  </CoffeeItem>
+                </Pressable>
+              )}
+              renderSectionHeader={({ section: { title } }) => (
+                <Text
+                  color="gray.300"
+                  fontFamily="Baloo2_700Bold"
+                  fontSize="text_sm"
+                  mb="8"
+                  mt="8"
+                >
+                  {title}
+                </Text>
+              )}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: 10 }}
+            />
+          </Animated.View>
         </View>
       </Animated.ScrollView>
     </View>
@@ -522,7 +413,7 @@ export function Home() {
     <Center backgroundColor={"gray.800"} flex="1">
       <HStack space="2">
         <Text fontFamily={"heading"} color="gray.100" fontSize={"title_lg"}>
-          Carregando...
+          Carregando
         </Text>
         <Loading />
       </HStack>
