@@ -39,6 +39,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
+  useAnimatedRef,
 } from "react-native-reanimated";
 import { coffeesData } from "@data/coffees";
 
@@ -62,6 +63,7 @@ export function Home() {
   const translate3 = useSharedValue(SCREEN_WIDTH);
   const translate4 = useSharedValue(300);
   const opacity1 = useSharedValue(0);
+  const ScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     return {
@@ -107,6 +109,13 @@ export function Home() {
 
   function handleReturnsTag(text: string) {
     setTagSelected(text);
+    if (text === "TRADICIONAIS") {
+      ScrollViewRef.current?.scrollTo({ x: 0, y: 550, animated: true });
+    } else if (text === "DOCES") {
+      ScrollViewRef.current?.scrollTo({ x: 0, y: 1500, animated: true });
+    } else if (text === "ESPECIAIS") {
+      ScrollViewRef.current?.scrollTo({ x: 0, y: 2000, animated: true });
+    }
   }
 
   function handleOnClickCart() {
@@ -210,6 +219,7 @@ export function Home() {
   return !loading ? (
     <View>
       <Animated.ScrollView
+        ref={ScrollViewRef}
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
@@ -223,20 +233,16 @@ export function Home() {
         <Animated.View
           style={[
             animatedContainerStyle,
-
             { height: 342, backgroundColor: "#272221" },
           ]}
         />
         <Animated.View
           style={[
             animatedContainerStyle2,
-
             { position: "absolute", paddingLeft: 32 },
           ]}
         >
-          <Animated.View
-            style={[animatedContainerStyle2, { backgroundColor: "#272221" }]}
-          >
+          <Animated.View style={[animatedContainerStyle2]}>
             <HStackAnimated
               marginTop="10"
               mb="2"
@@ -256,7 +262,7 @@ export function Home() {
                 </Text>
               </HStack>
               <TouchableOpacity onPress={handleOnClickCart}>
-                {loading ? <Loading /> : <Cart amount={Number(coffeesInCar)} />}
+                <Cart amount={Number(coffeesInCar)} />
               </TouchableOpacity>
             </HStackAnimated>
           </Animated.View>
