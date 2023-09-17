@@ -232,63 +232,64 @@ export function Home() {
 
         <Animated.View
           style={[
-            animatedContainerStyle,
             { height: 342, backgroundColor: "#272221" },
-          ]}
-        />
-        <Animated.View
-          style={[
-            animatedContainerStyle2,
-            { position: "absolute", paddingLeft: 32 },
+            //animatedContainerStyle,
           ]}
         >
-          <Animated.View style={[animatedContainerStyle2]}>
-            <HStackAnimated
-              marginTop="10"
-              mb="2"
-              justifyContent="space-between"
-              alignItems="center"
-              pt={4}
-              pb={2}
-            >
-              <HStack space={2} alignItems="center">
-                <MapPin weight="fill" color="#8047F8" size={20} />
-                <Text
-                  style={[
-                    { fontSize: 16, fontFamily: "body", color: "#FAFAFA" },
-                  ]}
-                >
-                  Porto alegre, RS
-                </Text>
-              </HStack>
-              <TouchableOpacity onPress={handleOnClickCart}>
-                <Cart amount={Number(coffeesInCar)} />
-              </TouchableOpacity>
-            </HStackAnimated>
-          </Animated.View>
-          <Text
-            color="gray.900"
-            fontFamily="heading_baloo"
-            fontSize="text_lg"
-            mb="4"
+          <Animated.View
+            style={[
+              { position: "absolute", paddingLeft: 32 },
+              // animatedContainerStyle2,
+            ]}
           >
-            Encontre o café perfeito para qualquer hora do dia
-          </Text>
-          <View flex="1">
-            <InputComponent
-              keyboardType="default"
-              placeholder="Pesquisar"
-              autoCapitalize="none"
-              returnsInputText={returnsTextInput}
-            />
-            <Image
-              source={Coffee}
-              alt="sementes de cafe"
-              position="absolute"
-              top={42}
-              right={-20}
-            />
-          </View>
+            <Animated.View>
+              <HStackAnimated
+                marginTop="10"
+                mb="2"
+                justifyContent="space-between"
+                alignItems="center"
+                pt={4}
+                pb={2}
+              >
+                <HStack space={2} alignItems="center">
+                  <MapPin weight="fill" color="#8047F8" size={20} />
+                  <Text
+                    style={[
+                      { fontSize: 16, fontFamily: "body", color: "#FAFAFA" },
+                    ]}
+                  >
+                    Porto alegre, RS
+                  </Text>
+                </HStack>
+                <TouchableOpacity onPress={handleOnClickCart}>
+                  <Cart amount={Number(coffeesInCar)} />
+                </TouchableOpacity>
+              </HStackAnimated>
+            </Animated.View>
+            <Text
+              color="gray.900"
+              fontFamily="heading_baloo"
+              fontSize="text_lg"
+              mb="4"
+            >
+              Encontre o café perfeito para qualquer hora do dia
+            </Text>
+            <View flex="1">
+              <InputComponent
+                keyboardType="default"
+                placeholder="Pesquisar"
+                autoCapitalize="none"
+                returnsInputText={returnsTextInput}
+              />
+              <Image
+                source={Coffee}
+                alt="sementes de cafe"
+                position="absolute"
+                top={42}
+                right={-20}
+              />
+            </View>
+          </Animated.View>
         </Animated.View>
         <View bgColor="gray.800">
           <Animated.View style={[animatedContainerStyle3]}>
